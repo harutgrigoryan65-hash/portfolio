@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<!-- saved from url=(0074)file:///C:/Users/admin/Downloads/Harutyun_Grigoryan_Portfolio_Updated.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harutyun Grigoryan — R&amp;D Engineering Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link href="./Harutyun_Grigoryan_Portfolio_files/css2" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080b0f;
+            --surface: #0f1318;
+            --surface2: #161c24;
+            --border: #1e2730;
+            --text: #c8d4e0;
+            --muted: #5a7080;
+            --accent: #00e5a0;
+            --accent2: #0090ff;
+            --accent3: #ff6b35;
+            --code-bg: #0a0e13;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        /* NOISE OVERLAY */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .container {
+            max-width: 1020px;
+            margin: 0 auto;
+            padding: 70px 24px 120px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            margin-bottom: 90px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 50px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: clamp(2.4em, 6vw, 4.2em);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -2px;
+            line-height: 1.05;
+        }
+
+        h1 span {
+            display: block;
+            font-size: 0.38em;
+            font-weight: 400;
+            letter-spacing: 4px;
+            color: var(--accent);
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .bio {
+            max-width: 580px;
+            color: var(--muted);
+            font-size: 1.05em;
+            line-height: 1.7;
+        }
+
+        .bio strong { color: var(--text); }
+
+        .contact-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+        }
+
+        .contact-row a {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78em;
+            color: var(--accent);
+            text-decoration: none;
+            border: 1px solid rgba(0, 229, 160, 0.3);
+            padding: 7px 18px;
+            border-radius: 3px;
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-row a:hover {
+            background: rgba(0, 229, 160, 0.08);
+            border-color: var(--accent);
+        }
+
+        /* ─── SECTION HEADERS ─── */
+        .section-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72em;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: 80px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--border), transparent);
+        }
+
+        .section-num {
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        /* ─── PROJECT CARDS ─── */
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 38px 42px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: rgba(0,229,160,0.25);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent), transparent);
+            opacity: 0.6;
+        }
+
+        .project-card.blue::before { background: linear-gradient(to right, var(--accent2), transparent); }
+        .project-card.orange::before { background: linear-gradient(to right, var(--accent3), transparent); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .project-id {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7em;
+            color: var(--muted);
+            letter-spacing: 2px;
+            padding-top: 4px;
+            white-space: nowrap;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 22px;
+        }
+
+        .tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72em;
+            padding: 4px 11px;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            background: var(--surface2);
+        }
+
+        .tag.hi { border-color: rgba(0,229,160,0.4); color: var(--accent); }
+        .tag.hi2 { border-color: rgba(0,144,255,0.4); color: var(--accent2); }
+        .tag.hi3 { border-color: rgba(255,107,53,0.4); color: var(--accent3); }
+
+        .label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65em;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 24px;
+            margin-bottom: 10px;
+        }
+
+        p.desc {
+            color: var(--muted);
+            font-size: 0.95em;
+        }
+
+        p.desc strong { color: var(--text); }
+
+        /* ─── LOGIC DIAGRAMS ─── */
+        .logic-flow {
+            background: var(--code-bg);
+            border: 1px dashed var(--border);
+            border-radius: 6px;
+            padding: 24px;
+            margin-top: 4px;
+        }
+
+        .flow-step {
+            display: grid;
+            grid-template-columns: 28px 1fr;
+            gap: 14px;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .flow-step:last-child { margin-bottom: 0; }
+
+        .step-n {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75em;
+            font-weight: 700;
+            color: var(--accent);
+            padding-top: 2px;
+        }
+
+        .step-n.b { color: var(--accent2); }
+        .step-n.o { color: var(--accent3); }
+
+        .step-body {
+            font-size: 0.9em;
+            color: #8899a8;
+            line-height: 1.6;
+        }
+
+        .step-body strong { color: var(--text); font-weight: 600; }
+
+        code {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.82em;
+            color: var(--accent);
+            background: rgba(0,229,160,0.07);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        code.b { color: var(--accent2); background: rgba(0,144,255,0.07); }
+        code.o { color: var(--accent3); background: rgba(255,107,53,0.07); }
+
+        .divider-arrow {
+            text-align: left;
+            color: var(--border);
+            padding-left: 42px;
+            margin: -10px 0 8px;
+            font-size: 0.85em;
+        }
+
+        /* ─── CODE BLOCKS ─── */
+        .code-window {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .code-titlebar {
+            background: var(--surface2);
+            padding: 9px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .code-filename {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.73em;
+            color: var(--muted);
+        }
+
+        .code-dots {
+            display: flex; gap: 6px;
+        }
+
+        .dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+        }
+
+        .dot-r { background: #ff5f57; }
+        .dot-y { background: #febc2e; }
+        .dot-g { background: #28c840; }
+
+        pre {
+            padding: 22px 20px;
+            overflow-x: auto;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8em;
+            line-height: 1.6;
+            color: #8899a8;
+        }
+
+        .kw { color: #7eb6ff; font-weight: 700; }
+        .fn { color: #ffd580; }
+        .st { color: #ffb47a; }
+        .cm { color: #4a6070; font-style: italic; }
+        .nm { color: #b5cea8; }
+        .sl { color: #7eb6ff; }
+
+        /* ─── RESULT BOX ─── */
+        .result-box {
+            background: rgba(0,229,160,0.05);
+            border: 1px solid rgba(0,229,160,0.2);
+            border-radius: 5px;
+            padding: 16px 20px;
+            margin-top: 4px;
+            font-size: 1em;
+            color: var(--text);
+        }
+
+        .result-box.b {
+            background: rgba(0,144,255,0.05);
+            border-color: rgba(0,144,255,0.2);
+        }
+
+        .result-box.o {
+            background: rgba(255,107,53,0.05);
+            border-color: rgba(255,107,53,0.2);
+        }
+
+        .hl { color: var(--accent); font-weight: 700; }
+        .hl2 { color: var(--accent2); font-weight: 700; }
+        .hl3 { color: var(--accent3); font-weight: 700; }
+
+        /* ─── TIMELINE ─── */
+        .timeline {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 36px 42px;
+        }
+
+        .t-item {
+            display: grid;
+            grid-template-columns: 1px 1fr;
+            gap: 0 28px;
+            padding-bottom: 36px;
+            position: relative;
+        }
+
+        .t-item:last-child { padding-bottom: 0; }
+
+        .t-line {
+            width: 1px;
+            background: var(--border);
+            position: relative;
+        }
+
+        .t-line::before {
+            content: '';
+            position: absolute;
+            top: 5px; left: -4px;
+            width: 9px; height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 1px solid var(--bg);
+        }
+
+        .t-item:last-child .t-line { background: transparent; }
+
+        .t-content { padding-top: 0; }
+
+        .t-role {
+            font-weight: 700;
+            color: #fff;
+            font-size: 1.0em;
+        }
+
+        .t-company {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72em;
+            color: var(--muted);
+            letter-spacing: 1px;
+            display: block;
+            margin: 4px 0 12px;
+        }
+
+        .t-list {
+            list-style: none;
+            color: var(--muted);
+            font-size: 0.9em;
+        }
+
+        .t-list li {
+            padding-left: 16px;
+            position: relative;
+            margin-bottom: 5px;
+        }
+
+        .t-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 0.8em;
+        }
+
+        .t-list em { color: #3a5060; font-style: italic; }
+
+        /* ─── OTHER PROJECTS GRID ─── */
+        .mini-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 680px) {
+            .mini-grid { grid-template-columns: 1fr; }
+            .project-card { padding: 26px 22px; }
+            .timeline { padding: 26px 22px; }
+        }
+
+        .mini-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 26px 28px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.2s;
+        }
+
+        .mini-card:hover {
+            border-color: rgba(0,229,160,0.25);
+            transform: translateY(-2px);
+        }
+
+        .mini-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+        }
+
+        .mini-card.mc1::before { background: linear-gradient(90deg, #00e5a0, transparent); }
+        .mini-card.mc2::before { background: linear-gradient(90deg, #0090ff, transparent); }
+        .mini-card.mc3::before { background: linear-gradient(90deg, #ff6b35, transparent); }
+        .mini-card.mc4::before { background: linear-gradient(90deg, #a855f7, transparent); }
+
+        .mini-card h4 {
+            color: #fff;
+            font-size: 1.0em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .mini-card .mini-desc {
+            font-size: 0.85em;
+            color: var(--muted);
+            line-height: 1.55;
+            margin-bottom: 16px;
+        }
+
+        .mini-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .mini-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68em;
+            padding: 3px 9px;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        /* ─── SKILLS GRID ─── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 680px) { .skills-grid { grid-template-columns: 1fr; } }
+
+        .skill-group {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 22px 24px;
+        }
+
+        .skill-group-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.66em;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+
+        .skill-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .sp {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.73em;
+            padding: 5px 12px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            background: var(--surface2);
+        }
+
+        .sp-green { border-color: rgba(0,229,160,0.35); color: var(--accent); }
+        .sp-blue  { border-color: rgba(0,144,255,0.35); color: var(--accent2); }
+
+        /* ─── EDUCATION ─── */
+        .edu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 680px) { .edu-grid { grid-template-columns: 1fr; } }
+
+        .edu-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px 26px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            transition: border-color 0.3s;
+        }
+
+        .edu-card:hover { border-color: rgba(0,229,160,0.2); }
+
+        .edu-icon {
+            font-size: 1.6em;
+            line-height: 1;
+            margin-top: 2px;
+        }
+
+        .edu-title {
+            font-weight: 700;
+            color: #fff;
+            font-size: 0.95em;
+            margin-bottom: 4px;
+        }
+
+        .edu-provider {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68em;
+            color: var(--accent);
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .edu-desc {
+            font-size: 0.85em;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        /* scroll animation */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .project-card, .mini-card, .timeline, .skill-group, .edu-card {
+            animation: fadeUp 0.5s ease both;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ═══════════════════════════════════ HEADER -->
+    <header>
+        <div class="header-top">
+            <div>
+                <h1>
+                    <span>R&amp;D Engineering Portfolio</span>
+                    Harutyun<br>Grigoryan
+                </h1>
+            </div>
+            <div class="bio">
+                <p>Python Engineer specializing in <strong>production-grade AI automation, backend systems, Telegram bots, and PostgreSQL-powered services</strong>.
+                I design and ship reliable agents, data pipelines, and database-backed applications — 
+                from live AI systems at SoftConstruct to active Telegram products used in real scenarios.</p>
+            </div>
+        </div>
+        <div class="contact-row">
+            <a href="file:///C:/Users/admin/Downloads/Harutyun_Grigoryan_Portfolio_Updated.html#" onclick="copyToClipboard(&#39;harut.grigoryan.65@gmail.com&#39;, this); return false;" data-original="harut.grigoryan.65@gmail.com">harut.grigoryan.65@gmail.com</a>
+            <a href="file:///C:/Users/admin/Downloads/Harutyun_Grigoryan_Portfolio_Updated.html#" onclick="copyToClipboard(&#39;+37433336646&#39;, this); return false;" data-original="+374 33 336 646">+374 33 336 646</a>
+            <a href="https://www.linkedin.com/in/harutyun-grigorian" target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+    </header>
+
+    <div class="section-title"><span class="section-num">01 /</span> AI Agent Orchestration &amp; Event-Driven Services</div>
+
+    <div class="project-card blue">
+        <div class="card-header">
+            <h3>AGGREGATOR: AI Agent Orchestration Service</h3>
+            <div class="project-id">AGG-SYS-01</div>
+        </div>
+        <div class="tags">
+            <span class="tag hi2">Python Asyncio</span>
+            <span class="tag hi2">Agent Lifecycle Mgmt</span>
+            <span class="tag hi2">Event-Driven</span>
+            <span class="tag">WebSockets</span>
+            <span class="tag">Self-Healing</span>
+            <span class="tag">Observability</span>
+        </div>
+
+        <div class="label">Project Overview</div>
+        <p class="desc">
+            A production-grade <strong>AI agent orchestration service</strong> — the central nervous system for live casino AI infrastructure.
+            Manages the full lifecycle of independent AI engines (Computer Vision agents, Hardware I/O agents, Lucky Color classifier)
+            via an <strong>event-driven WebSocket API</strong>. Built with reliability-first principles:
+            built-in retries, adaptive timeouts, process observability, and automated recovery.
+        </p>
+
+        <div class="label">Architecture — Reliability Patterns</div>
+        <div class="logic-flow">
+            <div class="flow-step">
+                <div class="step-n b">01</div>
+                <div class="step-body"><strong>Agent Discovery &amp; Handshake:</strong> On startup, Orchestrator spawns agent subprocesses and establishes bidirectional event streams. Assigns unique <code class="b">AgentID</code> and <code class="b">ProfileConfig</code> per agent.</div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n b">02</div>
+                <div class="step-body"><strong>Adaptive Heartbeat Monitor:</strong> Tiered timeout logic — not a simple ping. Active state: <code class="b">12s timeout</code>. Profile switch (CPU spike window): <code class="b">45s grace period</code>. Prevents false alarms under load.</div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n b">03</div>
+                <div class="step-body"><strong>Zombie Detection &amp; Auto-Restart:</strong> Observes both process state and network state independently. On zombie detection: <code class="b">SIGTERM → SIGKILL → restart</code> pipeline with state restoration.</div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n b">04</div>
+                <div class="step-body"><strong>Lazy Fallback Mode:</strong> Caches last known good agent state. Prioritizes internal process health over transient network lag — eliminating false recovery cycles.</div>
+            </div>
+        </div>
+
+        <div class="label">Production Status</div>
+        <div class="result-box b">
+            Live on <span class="hl2">4 active game tables</span> since October 2025.
+            <span class="hl2">99.9% uptime</span> with near-zero errors — achieved by distinguishing "network lag" from "process crash" at the observability layer.
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════ 02 EMBEDDED R&D -->
+    <div class="section-title"><span class="section-num">02 /</span> Embedded R&amp;D Optimization</div>
+
+    <div class="project-card">
+        <div class="card-header">
+            <h3>RICHWHEEL: High-Speed Sensor Consensus</h3>
+            <div class="project-id">RW-SYS-01</div>
+        </div>
+        <div class="tags">
+            <span class="tag hi">Python Threading</span>
+            <span class="tag hi">RPi.GPIO</span>
+            <span class="tag">Gray Code</span>
+            <span class="tag">Statistical Analysis</span>
+            <span class="tag">Raspberry Pi</span>
+        </div>
+
+        <div class="label">The Engineering Challenge</div>
+        <p class="desc">Physical sensors on a roulette wheel generated electrical noise ("bouncing"), producing false results during high-speed rotation. The system required <strong>0% error rate</strong> for casino payouts.</p>
+
+        <div class="label">Code Solution — Wheel_V2.2.py</div>
+        <div class="code-window">
+            <div class="code-titlebar">
+                <div class="code-dots">
+                    <div class="dot dot-r"></div>
+                    <div class="dot dot-y"></div>
+                    <div class="dot dot-g"></div>
+                </div>
+                <div class="code-filename">Wheel_V2.2.py — Multi-Sample Consensus Logic</div>
+            </div>
+<pre><span class="kw">def</span> <span class="fn">_background_worker</span>(<span class="sl">self</span>):
+    <span class="cm"># Critical loop running on separate Daemon thread</span>
+    <span class="kw">while</span> <span class="kw">True</span>:
+        <span class="kw">if</span> <span class="sl">self</span>.multi_sample_enabled <span class="kw">and</span> capture_triggered:
+            samples = []
+
+            <span class="cm"># 1. Burst Sampling: Capture 100+ raw binary states</span>
+            <span class="kw">for</span> i <span class="kw">in</span> range(<span class="sl">self</span>.sample_count):
+                binary_str = <span class="sl">self</span>._read_binary_string()   <span class="cm"># 10 GPIO pins</span>
+                sector     = <span class="sl">self</span>._decode_gray(binary_str) <span class="cm"># Gray Code decode</span>
+                samples.append(sector)
+                time.sleep(interval)
+
+            <span class="cm"># 2. Statistical Mode — find consensus winner</span>
+            counts              = Counter(samples)
+            most_common, count  = counts.most_common(<span class="nm">1</span>)[<span class="nm">0</span>]
+            consensus_pct       = (count / <span class="sl">self</span>.sample_count) * <span class="nm">100</span>
+
+            <span class="kw">if</span> consensus_pct &gt;= <span class="sl">self</span>.consensus_threshold:
+                <span class="sl">self</span>.lock_result(most_common)
+                print(<span class="st">f"WIN CONFIRMED: {most_common} ({consensus_pct:.1f}%)"</span>)
+</pre>
+        </div>
+
+        <div class="label">Business Outcome</div>
+        <div class="result-box">Eliminated hardware noise entirely. <span class="hl">Slashed game round duration by 37%</span> by removing the need for manual result verification.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════ 03 COMPUTER VISION -->
+    <div class="section-title"><span class="section-num">03 /</span> Computer Vision &amp; Mathematics</div>
+
+    <div class="project-card">
+        <div class="card-header">
+            <h3>MARBLE DETECT: Real-Time Physics Tracking</h3>
+            <div class="project-id">CV-MD-01</div>
+        </div>
+        <div class="tags">
+            <span class="tag hi">OpenCV (HSV)</span>
+            <span class="tag hi">Linear Algebra</span>
+            <span class="tag">WebSockets</span>
+            <span class="tag">RTSP</span>
+            <span class="tag">sub-100ms latency</span>
+        </div>
+
+        <div class="label">The Engineering Challenge</div>
+        <p class="desc">Determine the winner of a live marble race in real-time via IP cameras. Simple "zone" detection was inaccurate due to camera angles — required a <strong>mathematically exact finish-line calculation</strong>.</p>
+
+        <div class="label">Algorithmic Solution — MDetect.py</div>
+        <div class="logic-flow">
+            <div class="flow-step">
+                <div class="step-n">01</div>
+                <div class="step-body"><strong>Setup:</strong> Operator draws the Finish Line. System converts 2 points into a linear equation: <code>Ax + By + C = 0</code>.</div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n">02</div>
+                <div class="step-body"><strong>Detection:</strong> Each frame → convert RTSP stream to HSV → mask by color → extract centroid <code>(x, y)</code> per marble.</div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n">03</div>
+                <div class="step-body"><strong>Math Calculation:</strong> Signed algebraic distance of centroid to finish line: <code>Dist = (A·x + B·y + C) / √(A² + B²)</code></div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n">04</div>
+                <div class="step-body"><strong>Real-Time Ranking:</strong> Sort marbles by distance. Smallest distance = Rank #1. Broadcast JSON via WebSockets to Game Engine.</div>
+            </div>
+        </div>
+
+        <div class="label">Business Outcome</div>
+        <div class="result-box">Enabled <span class="hl">fully automated race payouts</span> with 100% fairness verification backed by geometric audit trail.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════ 04 COMPLEX AUTOMATION -->
+    <div class="section-title"><span class="section-num">04 /</span> Complex Automation Systems</div>
+
+    <div class="project-card orange">
+        <div class="card-header">
+            <h3>DICE AUTOMATION: Sequential State Machine</h3>
+            <div class="project-id">DA-SYS-01</div>
+        </div>
+        <div class="tags">
+            <span class="tag hi3">PyQt5</span>
+            <span class="tag hi3">State Machines</span>
+            <span class="tag">Serial / COM</span>
+            <span class="tag">MSS (Screen Cap)</span>
+            <span class="tag">TCP Override</span>
+        </div>
+
+        <div class="label">The Engineering Challenge</div>
+        <p class="desc">
+            A live casino dice game required tracking <strong>2 to 4 dice independently</strong> in a single round,
+            depending on the game variant. The core problem: each die physically settles at a
+            <strong>different moment in time</strong> after being shaken.
+            A naive "snapshot when all dice are done" approach failed — the system couldn't know when
+            the last die stopped, and waiting too long caused player frustration and game delays.
+        </p>
+        <p class="desc" style="margin-top: 10px;">
+            The solution: a <strong>pre-configured delay queue</strong>. Each die is assigned a settle time
+            (e.g. Die 1 → 1.2s, Die 2 → 1.8s…). The engine activates each die's Region of Interest (ROI)
+            exactly on schedule, reads the pip count via Computer Vision, broadcasts the partial result immediately,
+            then advances to the next die. Operators can override any result via TCP command in real-time.
+            The system also handles <strong>"shaking" events</strong> — if dice are disturbed mid-read,
+            a fault-recovery state resets the queue without crashing the live session.
+        </p>
+
+        <div class="label">Code Solution — main.py</div>
+        <div class="code-window">
+            <div class="code-titlebar">
+                <div class="code-dots">
+                    <div class="dot dot-r"></div>
+                    <div class="dot dot-y"></div>
+                    <div class="dot dot-g"></div>
+                </div>
+                <div class="code-filename">main.py — Sequential Queue Management</div>
+            </div>
+<pre><span class="kw">if</span> sequential_active:
+    <span class="kw">if</span> len(sequential_queue) &gt; <span class="nm">0</span>:
+        <span class="cm"># 1. Pop next dice from sorted delay queue</span>
+        target_delay, current_dice_name = sequential_queue[<span class="nm">0</span>]
+
+        <span class="cm"># 2. Check individual timer</span>
+        elapsed   = time.time() - sequential_start_time
+        time_left = target_delay - elapsed
+
+        <span class="kw">if</span> time_left &lt;= <span class="nm">0</span>:
+            <span class="cm"># 3. Activate specific ROI for this die only</span>
+            coords = ROIS[current_dice_name]
+            roi    = frame[coords[<span class="nm">0</span>]:coords[<span class="nm">1</span>], coords[<span class="nm">2</span>]:coords[<span class="nm">3</span>]]
+
+            <span class="cm"># 4. Run CV on isolated region → get pip count</span>
+            val, _ = count_pips_on_die(roi)
+            sequential_results[current_dice_name] = val
+
+            <span class="cm"># 5. Broadcast partial result &amp; advance queue</span>
+            <span class="sl">self</span>.detection_complete.emit(sequential_results)
+            sequential_queue.pop(<span class="nm">0</span>)
+</pre>
+        </div>
+
+        <div class="label">Business Outcome</div>
+        <div class="result-box o">Created a <span class="hl3">Fault-Tolerant System</span> handling "shaking" events, manual TCP overrides, and automated recovery — zero manual interventions required in production.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════ 05 LOCAL RAG / KNOWLEDGE BASE -->
+    <div class="section-title"><span class="section-num">05 /</span> AI Knowledge Base — Local RAG System</div>
+
+    <div class="project-card">
+        <div class="card-header">
+            <h3>AGGREGATOR KB: Local RAG Knowledge Base</h3>
+            <div class="project-id">KB-RAG-01</div>
+        </div>
+        <div class="tags">
+            <span class="tag hi">RAG Architecture</span>
+            <span class="tag hi">Data Chunking</span>
+            <span class="tag hi">TF-IDF Indexing</span>
+            <span class="tag">LM Studio</span>
+            <span class="tag">scikit-learn</span>
+            <span class="tag">Python Tkinter</span>
+            <span class="tag">JSON Pipelines</span>
+        </div>
+
+        <div class="label">Project Overview</div>
+        <p class="desc">
+            Built a fully <strong>local Retrieval-Augmented Generation (RAG) system</strong> to serve as the knowledge backbone
+            for the Aggregator project. All inference runs on-device via <strong>LM Studio</strong>, ensuring that internal
+            technical documentation and system specs never leave the local environment. The system transforms raw,
+            unstructured project documentation into a structured, queryable <strong>Knowledge Base</strong> that provides
+            precise context to a local LLM at query time.
+        </p>
+
+        <div class="label">Data Chunking Pipeline</div>
+        <div class="logic-flow">
+            <div class="flow-step">
+                <div class="step-n">01</div>
+                <div class="step-body"><strong>Raw Data Ingestion:</strong> Technical project data (system specs, protocol docs, configuration schemas) ingested from source files and normalized into a consistent internal format before processing.</div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n">02</div>
+                <div class="step-body"><strong>Multi-Version Chunking Strategy:</strong> Implemented three chunking variants — <code>v3</code> (balanced granularity), <code>final</code> (production-optimized, context-boundary-aware), and <code>detailed</code> (fine-grained, high-overlap for dense retrieval). Each variant is serialized as structured <code>JSON</code> arrays and stored independently, allowing retrieval strategy to be selected at runtime without re-processing source data.</div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n">03</div>
+                <div class="step-body"><strong>TF-IDF Vectorization &amp; Indexing:</strong> Each chunk corpus is vectorized using <code>TfidfVectorizer</code> (scikit-learn). The resulting sparse matrix acts as the search index. At query time, the user query is transformed into the same vector space and matched against all chunks via <strong>cosine similarity</strong> — enabling semantic-like retrieval without requiring embeddings or a vector database.</div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n">04</div>
+                <div class="step-body"><strong>Context Injection &amp; LLM Inference:</strong> The top-ranked chunks are assembled into a structured context block and injected into the prompt sent to the local LLM via the <strong>LM Studio HTTP API</strong>. This grounds the model's responses in verified, project-specific data rather than general training knowledge — reducing hallucinations on domain-specific queries.</div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n">05</div>
+                <div class="step-body"><strong>Interactive GUI (Tkinter):</strong> A lightweight Python desktop interface allows real-time interaction with the Knowledge Base — switching between chunk versions, inspecting retrieved context, and querying the LLM — without requiring a browser or external service.</div>
+            </div>
+        </div>
+
+        <div class="label">Technical Outcome</div>
+        <div class="result-box">
+            A fully <span class="hl">private, offline-capable</span> RAG pipeline. Chunk version selection allows tuning the
+            retrieval precision vs. recall trade-off per query type. TF-IDF indexing provides
+            <span class="hl">sub-second retrieval</span> across the full knowledge corpus with no GPU or cloud dependency.
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════ 06 OTHER PROJECTS -->
+    <div class="section-title"><span class="section-num">06 /</span> Other Projects</div>
+
+    <div class="mini-grid">
+
+        <div class="mini-card mc2">
+            <h4>LUCKY COLOR: LLM-Driven Validation Pipeline</h4>
+            <p class="mini-desc">
+                Hybrid data pipeline combining Computer Vision and Gemini LLM for game result validation.
+                OpenCV classifies the winning color; Gemini provides a secondary <strong>LLM verification layer</strong>
+                for ambiguous edge cases — dual-source consensus before any payout is triggered.
+                A practical example of <strong>LLM tool-calling</strong> integrated into a real-time production pipeline.
+            </p>
+            <div class="mini-tags">
+                <span class="mini-tag">OpenCV</span>
+                <span class="mini-tag">Gemini API</span>
+                <span class="mini-tag">LLM Tool-Calling</span>
+                <span class="mini-tag">Dual Consensus</span>
+                <span class="mini-tag">Real-Time Pipeline</span>
+            </div>
+        </div>
+
+        <div class="mini-card mc1">
+            <h4>STUDIO MONITORING: Live Ops Dashboard</h4>
+            <p class="mini-desc">
+                Real-time monitoring system for live casino streaming studios. Tracks server health,
+                stream quality, and critical incidents. Built to handle simultaneous multi-table
+                monitoring with alerting and auto-escalation logic.
+            </p>
+            <div class="mini-tags">
+                <span class="mini-tag">WebSockets</span>
+                <span class="mini-tag">RTSP</span>
+                <span class="mini-tag">Auto-Alert</span>
+                <span class="mini-tag">Multi-Table</span>
+            </div>
+        </div>
+
+        <div class="mini-card mc3">
+            <h4>RELAY CONTROLLER: Arduino Hardware Bridge</h4>
+            <p class="mini-desc">
+                Python-to-Arduino serial bridge for industrial relay control in live game studios.
+                Handles physical game triggers (spin start, bet lock, result reveal) with
+                sub-millisecond timing precision and fail-safe fallback states.
+            </p>
+            <div class="mini-tags">
+                <span class="mini-tag">Arduino</span>
+                <span class="mini-tag">Serial/COM</span>
+                <span class="mini-tag">Relay Logic</span>
+                <span class="mini-tag">Fail-Safe</span>
+            </div>
+        </div>
+
+        <div class="mini-card mc4">
+            <h4>PROFILE SWITCH ENGINE: Zero-Downtime Config Reload</h4>
+            <p class="mini-desc">
+                Dynamic configuration reloader for live game engines. Allows operators to switch
+                camera profiles, ROI coordinates, and detection parameters mid-session —
+                without stopping or restarting any running service.
+            </p>
+            <div class="mini-tags">
+                <span class="mini-tag">Python Asyncio</span>
+                <span class="mini-tag">Hot Reload</span>
+                <span class="mini-tag">JSON Config</span>
+                <span class="mini-tag">Zero Downtime</span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- ═══════════════════════════════════ 07 TELEGRAM / POSTGRES -->
+    <div class="section-title"><span class="section-num">07 /</span> Telegram Bots &amp; PostgreSQL Products</div>
+
+    <div class="mini-grid">
+
+        <div class="mini-card mc1">
+            <h4>@armdriveBOT — Driving Exam Preparation Bot</h4>
+            <p class="mini-desc">
+                Built and maintained an active Telegram bot for <strong>Armenian driving license exam preparation</strong>.
+                Designed the backend logic and integrated it with <strong>PostgreSQL</strong> for storing user data,
+                learning progress, question flows, and bot interaction records. Focused on stable behavior,
+                clear user flows, and real-world usability.
+            </p>
+            <div class="mini-tags">
+                <span class="mini-tag">Telegram Bot API</span>
+                <span class="mini-tag">PostgreSQL</span>
+                <span class="mini-tag">Python Backend</span>
+                <span class="mini-tag">User Progress</span>
+                <span class="mini-tag">Production Bot</span>
+            </div>
+        </div>
+
+        <div class="mini-card mc2">
+            <h4>Management Bot for Local Business</h4>
+            <p class="mini-desc">
+                Created a Telegram bot for the <strong>managerial staff of a local business</strong> to support internal workflows
+                and operational coordination. Implemented the backend logic, structured data handling,
+                and automated interactions to simplify routine manager tasks and improve responsiveness.
+            </p>
+            <div class="mini-tags">
+                <span class="mini-tag">Telegram Automation</span>
+                <span class="mini-tag">Business Workflow</span>
+                <span class="mini-tag">Python</span>
+                <span class="mini-tag">Internal Tool</span>
+                <span class="mini-tag">Operations</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ═══════════════════════════════════ SKILLS -->
+    <div class="section-title"><span class="section-num">08 /</span> Tech Stack</div>
+
+    <div class="skills-grid">
+
+        <div class="skill-group">
+            <div class="skill-group-title">Core Languages</div>
+            <div class="skill-pills">
+                <span class="sp sp-green">Python 3.x</span>
+                <span class="sp sp-green">Async / Typed Code</span>
+                <span class="sp">Bash / Shell</span>
+                <span class="sp">JavaScript (basic)</span>
+                <span class="sp sp-green">SQL</span>
+            </div>
+        </div>
+
+        <div class="skill-group">
+            <div class="skill-group-title">AI &amp; LLM Integration</div>
+            <div class="skill-pills">
+                <span class="sp sp-green">Gemini API</span>
+                <span class="sp sp-green">LLM Tool-Calling</span>
+                <span class="sp sp-green">RAG Architecture</span>
+                <span class="sp sp-green">Data Chunking</span>
+                <span class="sp">LM Studio (Local LLM)</span>
+                <span class="sp">TF-IDF Retrieval</span>
+                <span class="sp">Prompt Engineering</span>
+                <span class="sp">CV + AI Consensus</span>
+                <span class="sp">Agent Design Patterns</span>
+            </div>
+        </div>
+
+        <div class="skill-group">
+            <div class="skill-group-title">Backend &amp; APIs</div>
+            <div class="skill-pills">
+                <span class="sp sp-blue">Python Asyncio</span>
+                <span class="sp sp-blue">WebSockets</span>
+                <span class="sp sp-blue">REST / TCP APIs</span>
+                <span class="sp sp-blue">Telegram Bot API</span>
+                <span class="sp">Event-Driven Services</span>
+                <span class="sp">Microservices</span>
+            </div>
+        </div>
+
+        <div class="skill-group">
+            <div class="skill-group-title">Reliability Engineering</div>
+            <div class="skill-pills">
+                <span class="sp sp-blue">Self-Healing Systems</span>
+                <span class="sp sp-blue">Adaptive Retries</span>
+                <span class="sp">Process Observability</span>
+                <span class="sp">Fault Recovery</span>
+                <span class="sp">State Machines</span>
+            </div>
+        </div>
+
+        <div class="skill-group">
+            <div class="skill-group-title">Computer Vision</div>
+            <div class="skill-pills">
+                <span class="sp sp-green">OpenCV</span>
+                <span class="sp sp-green">HSV Color Masking</span>
+                <span class="sp">RTSP Streams</span>
+                <span class="sp">ROI Detection</span>
+                <span class="sp">Real-Time Pipelines</span>
+            </div>
+        </div>
+
+        <div class="skill-group">
+            <div class="skill-group-title">Hardware &amp; Embedded</div>
+            <div class="skill-pills">
+                <span class="sp">Raspberry Pi / GPIO</span>
+                <span class="sp">Arduino / Serial</span>
+                <span class="sp">Gray Code Decoding</span>
+                <span class="sp">Relay Control</span>
+                <span class="sp">BGA Soldering</span>
+            </div>
+        </div>
+
+    </div>
+
+
+        <div class="skill-group">
+            <div class="skill-group-title">Databases</div>
+            <div class="skill-pills">
+                <span class="sp sp-green">PostgreSQL</span>
+                <span class="sp sp-green">pgAdmin</span>
+                <span class="sp">Query Design</span>
+                <span class="sp">Data Modeling</span>
+                <span class="sp">CRUD Operations</span>
+            </div>
+        </div>
+
+    <!-- ═══════════════════════════════════ EDUCATION -->
+    <div class="section-title"><span class="section-num">09 /</span> Education &amp; Certifications</div>
+
+    <div class="edu-grid">
+
+        <div class="edu-card">
+            <div class="edu-icon">🎓</div>
+            <div class="edu-body">
+                <div class="edu-title">Python — Complete Bootcamp: Zero to Hero</div>
+                <div class="edu-provider">Udemy · José Portilla</div>
+                <div class="edu-desc">
+                    Comprehensive Python course covering OOP, data structures, file I/O, decorators,
+                    generators, and web scraping. 22+ hours of hands-on projects.
+                </div>
+            </div>
+        </div>
+
+        <div class="edu-card">
+            <div class="edu-icon">🎓</div>
+            <div class="edu-body">
+                <div class="edu-title">Python for Data Science and Machine Learning</div>
+                <div class="edu-provider">Udemy · Jose Portilla &amp; Frank Kane</div>
+                <div class="edu-desc">
+                    NumPy, Pandas, Matplotlib, Scikit-Learn fundamentals. Statistical analysis and
+                    data pipeline techniques directly applied in Computer Vision projects.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ═══════════════════════════════════ WORK EXPERIENCE -->
+    <div class="section-title"><span class="section-num">10 /</span> Work Experience</div>
+
+    <div class="timeline">
+
+        <div class="t-item">
+            <div class="t-line"></div>
+            <div class="t-content">
+                <div class="t-role">R&amp;D Specialist — AI Automation</div>
+                <span class="t-company">SOFTCONSTRUCT (CreedRoomz) — Jul 2025 – Present</span>
+                <ul class="t-list">
+                    <li>All systems below were built and deployed starting <strong>October 2025</strong>, with ongoing improvements through present day.</li>
+                    <li>Architecting the "Aggregator" microservice ecosystem — currently running live on <strong>4 active game tables</strong> with near-zero detection errors.</li>
+                    <li>Developed a <strong>local RAG Knowledge Base</strong> (LM Studio + TF-IDF) to accelerate internal development: raw technical documentation is chunked into structured JSON, indexed, and retrieved at query time to provide grounded context to a local LLM — entirely offline.</li>
+                    <li>Developing hybrid AI/CV solutions (OpenCV + Gemini) for automated game result validation.</li>
+                    <li>Integrating industrial hardware (Arduino/Relays/RPi) with Python backends via Serial &amp; WebSockets.</li>
+                    <li>Deployed solutions increasing game speed by 30–40%; continuously fine-tuning accuracy across all active tables.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="t-item">
+            <div class="t-line"></div>
+            <div class="t-content">
+                <div class="t-role">IT Technical Support</div>
+                <span class="t-company">SOFTCONSTRUCT (CreedRoomz) — Mar 2025 – Oct 2025</span>
+                <ul class="t-list">
+                    <li>Maintained live studio servers and resolved critical streaming incidents.</li>
+                    <li>Monitored multi-table streaming infrastructure and ensured broadcast stability.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="t-item">
+            <div class="t-line"></div>
+            <div class="t-content">
+                <div class="t-role">Master Repair Technician — Phones &amp; Laptops</div>
+                <span class="t-company">inTOUCH — Jan 2025 – Jul 2025</span>
+                <ul class="t-list">
+                    <li>Specialized in BGA reballing, chip-level soldering, and complex motherboard diagnostics.</li>
+                    <li>Deep hardware expertise now directly applied to embedded R&amp;D work.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="t-item">
+            <div class="t-line"></div>
+            <div class="t-content">
+                <div class="t-role">Specialist — Mobile &amp; Laptop Repair</div>
+                <span class="t-company">iBOLIT — Dec 2022 – Dec 2024</span>
+                <ul class="t-list">
+                    <li>Advanced diagnostics and repair of mobile devices and laptops.</li>
+                    <li>Customer technical support and troubleshooting.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="t-item">
+            <div class="t-line"></div>
+            <div class="t-content">
+                <div class="t-role">Electrotechnician</div>
+                <span class="t-company">SMARTLABS — Dec 2019 – Dec 2022</span>
+                <ul class="t-list">
+                    <li>Foundational experience in electronics, hardware architecture, and circuit analysis.</li>
+                    <li>Maintenance of consumer electronics                </li></ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function copyToClipboard(text, el) {
+        navigator.clipboard.writeText(text).then(function() {
+            const original = el.dataset.original;
+            el.textContent = "✓ Copied!";
+            el.style.background = "rgba(0,229,160,0.15)";
+            el.style.borderColor = "var(--accent)";
+            setTimeout(function() {
+                el.textContent = original;
+                el.style.background = "";
+                el.style.borderColor = "";
+            }, 1800);
+        }).catch(function() {
+            // fallback for older browsers
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            const original = el.dataset.original;
+            el.textContent = "✓ Copied!";
+            setTimeout(function() { el.textContent = original; }, 1800);
+        });
+        return false;
+    }
+</script>
+
+</body></html>
