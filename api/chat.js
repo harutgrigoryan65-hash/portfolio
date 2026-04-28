@@ -31,8 +31,8 @@ const portfolioChunks = [
     {
         id: "profile-summary",
         title: "Profile Summary",
-        keywords: ["who", "about", "summary", "profile", "engineer", "python", "кто", "о нем", "профиль", "инженер"],
-        content: `Harutyun Grigoryan is a Python Engineer focused on production AI automation, backend systems, Telegram bots, PostgreSQL services, Computer Vision, and hardware-integrated R&D work. His portfolio emphasizes production-grade AI automation, event-driven services, OpenCV/OCR pipelines, local RAG knowledge-base workflows, Arduino/relay/Raspberry Pi integrations, and business automation tools for estimates, presentations, PDF export, and CRM/work-management integrations.`
+        keywords: ["who", "about", "summary", "profile", "engineer", "python", "fullstack", "full-stack", "frontend", "backend", "ai", "кто", "о нем", "профиль", "инженер", "фулстек"],
+        content: `Harutyun Grigoryan is an AI Full-Stack Engineer focused on AI-enabled products, production automation, backend systems, frontend workflows, Telegram bots, PostgreSQL services, Computer Vision, and hardware-integrated R&D work. His portfolio emphasizes end-to-end product engineering: web apps, backend APIs, AI automation, event-driven services, OpenCV/OCR pipelines, local RAG knowledge-base workflows, Arduino/relay/Raspberry Pi integrations, and business automation tools for estimates, presentations, PDF export, and CRM/work-management integrations.`
     },
     {
         id: "contact",
@@ -44,7 +44,7 @@ const portfolioChunks = [
         id: "skills-stack",
         title: "Skills And Technology Stack",
         keywords: ["skills", "stack", "technologies", "tools", "python", "postgresql", "opencv", "ocr", "gemini", "arduino", "websocket", "next", "typescript", "pdf", "pwa", "навыки", "стек", "технологии"],
-        content: `Core stack: Python, backend systems, event-driven services, Telegram bots, PostgreSQL-backed applications, OpenCV, OCR/Tesseract, Gemini API, local LLM/RAG workflows, JSON chunking, TF-IDF retrieval, Tkinter GUI, Arduino, relays, Raspberry Pi, Serial communication, WebSockets, Next.js, TypeScript, PDF generation, PWA/mobile UX, diff and rollback flows, and CRM/work-management integrations.`
+        content: `Core stack: AI full-stack product engineering, Python, Next.js, TypeScript, frontend workflows, backend systems, event-driven services, Telegram bots, PostgreSQL-backed applications, OpenCV, OCR/Tesseract, Gemini API, local LLM/RAG workflows, JSON chunking, TF-IDF retrieval, Tkinter GUI, Arduino, relays, Raspberry Pi, Serial communication, WebSockets, PDF generation, PWA/mobile UX, diff and rollback flows, and CRM/work-management integrations.`
     },
     {
         id: "video-demos",

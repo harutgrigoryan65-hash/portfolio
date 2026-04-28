@@ -1,12 +1,12 @@
 # Harutyun Grigoryan Portfolio
 
-Static engineering portfolio focused on production AI automation, backend systems, Computer Vision, Telegram bots, PostgreSQL services, and hardware-integrated R&D work.
+Static engineering portfolio focused on AI full-stack product engineering, production automation, backend systems, Computer Vision, Telegram bots, PostgreSQL services, and hardware-integrated R&D work.
 
 Live site: https://harutgrigoryan65-hash.github.io/portfolio/
 
 ## About
 
-This portfolio presents selected systems and demonstrations from my work as a Python/R&D engineer, including:
+This portfolio presents selected systems and demonstrations from my work as an AI Full-Stack / R&D engineer, including:
 
 - AI automation services for live studio operations
 - Computer Vision pipelines with OpenCV and OCR
