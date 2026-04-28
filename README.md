@@ -15,6 +15,7 @@ This portfolio presents selected systems and demonstrations from my work as an A
 - PostgreSQL-backed applications
 - Arduino, relay, Raspberry Pi, Serial, and WebSocket integrations
 - AI portfolio assistant for recruiter and visitor questions
+- Direct Telegram contact handoff from the portfolio chat
 
 ## Structure
 
@@ -22,7 +23,8 @@ This portfolio presents selected systems and demonstrations from my work as an A
 .
 ├── index.html
 ├── api/
-│   └── chat.js
+│   ├── chat.js
+│   └── human-chat.js
 ├── assets/
 │   ├── video-posters/
 │   └── videos/
@@ -39,12 +41,21 @@ The site includes an AI chat widget that can answer visitor questions about Haru
 
 The frontend is in `index.html`; the secure serverless API is in `api/chat.js` and uses Google AI Studio / Gemini API.
 
+The chat widget also includes a `Contact Harutyun` direct-contact mode. When a visitor asks for contact details, asks a question not covered by the RAG context, or presses the contact button, the site can notify Harutyun in Telegram through `api/human-chat.js`. The visitor can then write in the same site chat while Harutyun replies from Telegram.
+
+On mobile, the portfolio navigation becomes a fixed bottom glass panel. The last item is the chat button, using the same chat icon as the assistant launcher, so the chat control stays inside one mobile navigation structure.
+
 Required environment variables:
 
 ```text
 GEMINI_API_KEY=your-google-ai-studio-key-here
 GEMINI_MODEL=gemini-2.5-flash
 SITE_ORIGIN=https://your-public-site-url
+
+# Optional direct Telegram contact mode
+TELEGRAM_BOT_TOKEN=your-telegram-bot-token
+TELEGRAM_ADMIN_ID=your-telegram-user-id
+# TELEGRAM_CHAT_ID=your-telegram-chat-id
 ```
 
 ## Local Run
@@ -68,6 +79,15 @@ GEMINI_API_KEY=your-real-key
 GEMINI_MODEL=gemini-2.5-flash
 SITE_ORIGIN=http://localhost:3000
 ```
+
+To test the direct Telegram contact mode, also add:
+
+```text
+TELEGRAM_BOT_TOKEN=your-real-bot-token
+TELEGRAM_ADMIN_ID=your-telegram-user-id
+```
+
+In Telegram, reply directly to the bot message that contains the visitor session id. That reply is what appears back in the website chat.
 
 Run the Vercel local server:
 
@@ -101,6 +121,7 @@ Recommended Vercel settings for AI chat:
 - Build Command: none
 - Output Directory: none
 - Environment Variables: `GEMINI_API_KEY`, `GEMINI_MODEL`, `SITE_ORIGIN`
+- Optional direct-contact variables: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_ADMIN_ID` or `TELEGRAM_CHAT_ID`
 
 Deploy to production:
 
