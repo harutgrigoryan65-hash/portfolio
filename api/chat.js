@@ -1,6 +1,31 @@
 import { GoogleGenAI } from "@google/genai";
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 
 const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+
+function loadLocalEnv() {
+    const localEnvPath = join(process.cwd(), ".env.local");
+
+    if (!existsSync(localEnvPath)) return;
+
+    const lines = readFileSync(localEnvPath, "utf8").split(/\r?\n/);
+
+    for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith("#")) continue;
+
+        const separator = trimmed.indexOf("=");
+        if (separator === -1) continue;
+
+        const key = trimmed.slice(0, separator).trim();
+        const value = trimmed.slice(separator + 1).trim().replace(/^["']|["']$/g, "");
+
+        if (key && !process.env[key]) {
+            process.env[key] = value;
+        }
+    }
+}
 
 const portfolioContext = `
 Harutyun Grigoryan is a Python Engineer focused on production AI automation, backend systems, Telegram bots, PostgreSQL services, Computer Vision, and hardware-integrated R&D work.
@@ -88,6 +113,7 @@ function normalizeHistory(history) {
 }
 
 export default async function handler(req, res) {
+    loadLocalEnv();
     setCorsHeaders(req, res);
 
     if (req.method === "OPTIONS") {

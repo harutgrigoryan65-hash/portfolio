@@ -72,8 +72,10 @@ SITE_ORIGIN=http://localhost:3000
 Run the Vercel local server:
 
 ```bash
-npm run dev
+npx vercel dev --yes
 ```
+
+If Vercel asks for a local project setup, choose the current project and keep the default settings.
 
 Open:
 
