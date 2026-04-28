@@ -177,7 +177,7 @@ function detectLanguage(text) {
 
     if (usesRussian(text)) return "ru";
 
-    if (/\b(barev|barev dzez|vonc|vonces|inch|inchka|inch ka|lav|shnorhakal|merci|hajox|hajogh|apres)\b/i.test(normalized)) {
+    if (/\b(barev|barev dzez|vonc|vonces|inch|inchka|inch ka|inchqan|lav|shnorhakal|merci|hajox|hajogh|apres|sirum|karox|karogh|unes|uni|pordz|ashxatanq|naxagic|kap)\b/i.test(normalized)) {
         return "hy-latn";
     }
 
@@ -223,19 +223,19 @@ function friendlyAnswer(message) {
 
     if (isThanks(message)) {
         if (language === "ru") return "Пожалуйста. Можешь спросить меня про опыт Harutyun, проекты, стек, AI/RAG-системы или контакты.";
-        if (language === "hy-latn") return "Khndrem. Karogh es hartsnel Harutyun-i pordzi, project-neri, tech stack-i kam contact-neri masin.";
+        if (language === "hy-latn") return "Խնդրեմ։ Կարող ես հարցնել Հարությունի փորձի, նախագծերի, տեխնոլոգիական ստեկի, AI/RAG համակարգերի կամ կոնտակտների մասին։";
         return "You're welcome. You can ask me about Harutyun's experience, projects, tech stack, AI/RAG systems, or contact details.";
     }
 
     if (isHowAreYou(message)) {
         if (language === "ru") return "Всё хорошо, я готов помочь с портфолио Harutyun. Можешь спросить: сколько у него опыта, какие проекты самые сильные, какой стек, или как с ним связаться.";
-        if (language === "hy-latn") return "Lav em, patrast em ognel Harutyun-i portfolio-i masin. Karogh es hartsnel pordzi, project-neri, tech stack-i kam contact-neri masin.";
+        if (language === "hy-latn") return "Լավ եմ, պատրաստ եմ օգնել Հարությունի պորտֆոլիոյի մասին։ Կարող ես հարցնել նրա փորձի, ամենաուժեղ նախագծերի, տեխնոլոգիական ստեկի կամ կոնտակտների մասին։";
         return "I'm doing well and ready to help with Harutyun's portfolio. You can ask about his experience, strongest projects, tech stack, or contact details.";
     }
 
     if (isGreeting(message)) {
         if (language === "ru") return "Привет. Я AI-ассистент портфолио Harutyun. Могу рассказать про его опыт, проекты, стек, AI/RAG-системы, сметы/презентации или контакты.";
-        if (language === "hy-latn") return "Barev. Es Harutyun-i portfolio-i AI assistant-n em. Karogh em patmel ira pordzi, project-neri, tech stack-i, AI/RAG hamakargeri kam contact-neri masin.";
+        if (language === "hy-latn") return "Բարև։ Ես Հարությունի պորտֆոլիոյի AI օգնականն եմ։ Կարող եմ պատմել նրա փորձի, նախագծերի, տեխնոլոգիական ստեկի, AI/RAG համակարգերի, սմետաների/պրեզենտացիաների կամ կոնտակտների մասին։";
         return "Hi. I'm Harutyun's portfolio AI assistant. I can tell you about his experience, projects, tech stack, AI/RAG systems, estimate/presentation platform work, or contact details.";
     }
 
@@ -248,7 +248,7 @@ function missingInfoAnswer(message) {
     }
 
     if (detectLanguage(message) === "hy-latn") {
-        return "Portfolio-um ays hartsov informacia chka. Lav klini kap hastatel Harutyun-i het: harut.grigoryan.65@gmail.com kam +374 33 336 646.";
+        return "Պորտֆոլիոյում այս հարցի մասին տեղեկություն չկա։ Ավելի ճիշտ կլինի կապ հաստատել Հարությունի հետ՝ harut.grigoryan.65@gmail.com կամ +374 33 336 646։";
     }
 
     return "The portfolio does not include information about that. It is best to contact Harutyun directly: harut.grigoryan.65@gmail.com or +374 33 336 646.";
@@ -265,6 +265,7 @@ Rules:
 - Do not invent employers, dates, metrics, education, private details, or availability.
 - Keep answers concise, confident, and recruiter-friendly.
 - Match the visitor's language when possible. If they write in Russian, answer in Russian. If they write in English, answer in English.
+- If the visitor writes Armenian using Latin letters, answer in normal Armenian script, not transliteration.
 - Always finish the answer fully. Do not stop after a heading or an unfinished bullet.
 - If asked about experience and the retrieved chunks include experience data, you must include the total duration and then list all relevant roles from those chunks. Do this even when the user asks "how much experience?" unless they explicitly asks for only one number.
 - For experience answers, never mention only one role when the retrieved chunks include multiple roles.
