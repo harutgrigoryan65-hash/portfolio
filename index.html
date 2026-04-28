@@ -1671,6 +1671,7 @@
         if (chatSuggestions) chatSuggestions.remove();
 
         addChatMessage("user", question);
+        const requestHistory = chatHistory.slice(-8);
         chatHistory.push({ role: "user", content: question });
 
         chatInput.value = "";
@@ -1685,7 +1686,7 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     message: question,
-                    history: chatHistory.slice(-8)
+                    history: requestHistory
                 })
             });
 
