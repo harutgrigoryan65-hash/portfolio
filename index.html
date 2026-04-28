@@ -88,6 +88,41 @@
             background: rgba(0,229,160,0.07);
         }
 
+        .site-nav .nav-chat-link {
+            position: relative;
+            color: var(--accent);
+            display: inline-grid;
+            place-items: center;
+            min-width: 42px;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .site-nav .nav-chat-link::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.18), transparent 34%),
+                linear-gradient(120deg, rgba(0,229,160,0.06), rgba(0,144,255,0.18), rgba(255,255,255,0.08), rgba(0,229,160,0.18));
+            background-size: 220% 220%;
+            opacity: 0.88;
+            animation: navChatLiquid 5s ease-in-out infinite;
+        }
+
+        .site-nav .nav-chat-link svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            filter: drop-shadow(0 0 10px rgba(0,229,160,0.32));
+        }
+
+        @keyframes navChatLiquid {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
         /* ─── HEADER ─── */
         header {
             margin-bottom: 54px;
@@ -901,28 +936,61 @@
             .project-card { padding: 32px 30px; }
         }
 
-        @media (max-width: 680px) {
-            body { line-height: 1.58; }
+	        @media (max-width: 680px) {
+	            body { line-height: 1.58; }
 
-            .container {
-                padding: 14px 14px 96px;
-            }
+	            .container {
+	                padding: 14px 14px 124px;
+	            }
 
-            .site-nav {
-                width: 100%;
-                justify-content: flex-start;
-                overflow-x: auto;
-                margin-bottom: 28px;
-                padding: 6px;
-                scrollbar-width: none;
-            }
+	            .site-nav {
+	                position: fixed;
+	                left: 10px;
+	                right: 10px;
+	                top: auto;
+	                bottom: max(10px, env(safe-area-inset-bottom));
+	                z-index: 35;
+	                width: auto;
+	                max-width: none;
+	                display: grid;
+	                grid-template-columns: repeat(5, minmax(0, 1fr));
+	                justify-content: stretch;
+	                gap: 3px;
+	                overflow: hidden;
+	                margin: 0;
+	                padding: 6px;
+	                scrollbar-width: none;
+	                border-radius: 16px;
+	            }
 
-            .site-nav::-webkit-scrollbar { display: none; }
+	            .site-nav::-webkit-scrollbar { display: none; }
 
-            .site-nav a {
-                font-size: 0.64em;
-                padding: 8px 10px;
-            }
+	            .site-nav a {
+	                min-width: 0;
+	                display: flex;
+	                align-items: center;
+	                justify-content: center;
+	                height: 38px;
+	                padding: 0 4px;
+	                border-radius: 11px;
+	                font-size: clamp(0.48em, 2.45vw, 0.58em);
+	                letter-spacing: 0;
+	                text-align: center;
+	                overflow: hidden;
+	                text-overflow: ellipsis;
+	            }
+
+                .site-nav .nav-chat-link {
+                    min-width: 0;
+                    border-radius: 13px;
+                    background: rgba(0,229,160,0.08);
+                    border: 1px solid rgba(0,229,160,0.22);
+                }
+
+                .site-nav .nav-chat-link svg {
+                    width: 20px;
+                    height: 20px;
+                }
 
             header {
                 margin-bottom: 34px;
@@ -1413,7 +1481,7 @@
                     inset: 0;
                 }
 
-                .ai-chat.open .ai-chat-toggle {
+                .ai-chat-toggle {
                     display: none;
                 }
 
@@ -1470,12 +1538,16 @@
 <div class="container">
 
     <nav class="site-nav" aria-label="Portfolio navigation">
-        <a href="#demos">Demos</a>
-        <a href="#projects">Projects</a>
-        <a href="#stack">Stack</a>
-        <a href="#experience">Experience</a>
-        <a href="#" data-open-chat>AI Assistant</a>
-    </nav>
+	        <a href="#demos">Demos</a>
+	        <a href="#projects">Projects</a>
+	        <a href="#stack">Stack</a>
+	        <a href="#experience">Experience</a>
+	        <a class="nav-chat-link" href="#" data-open-chat aria-label="Open chat">
+	            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+	                <path d="M7 8h10M7 12h7M6.4 18.2 3 21V6.8C3 4.7 4.7 3 6.8 3h10.4C19.3 3 21 4.7 21 6.8v6.4c0 2.1-1.7 3.8-3.8 3.8H8.7l-2.3 1.2Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+	            </svg>
+	        </a>
+	    </nav>
 
     <!-- ═══════════════════════════════════ HEADER -->
     <header>
