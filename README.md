@@ -14,28 +14,56 @@ This portfolio presents selected systems and demonstrations from my work as a Py
 - Telegram bots and backend services
 - PostgreSQL-backed applications
 - Arduino, relay, Raspberry Pi, Serial, and WebSocket integrations
+- AI portfolio assistant for recruiter and visitor questions
 
 ## Structure
 
 ```text
 .
 ├── index.html
+├── api/
+│   └── chat.js
 ├── assets/
 │   ├── video-posters/
 │   └── videos/
+├── .env.example
 ├── .gitignore
 ├── .nojekyll
+├── package.json
 └── README.md
+```
+
+## AI Assistant
+
+The site includes an AI chat widget that can answer visitor questions about Harutyun's experience, projects, stack, and contact details.
+
+The frontend is in `index.html`; the secure serverless API is in `api/chat.js`.
+
+Required environment variables:
+
+```text
+OPENAI_API_KEY=sk-your-key-here
+OPENAI_MODEL=gpt-5.4-mini
+SITE_ORIGIN=https://your-public-site-url
 ```
 
 ## Deployment
 
-This is a static site and can be hosted directly with GitHub Pages.
+This is a static site with an optional serverless AI endpoint.
 
-Recommended GitHub Pages settings:
+GitHub Pages can host the static portfolio, but it cannot run `api/chat.js` or store `OPENAI_API_KEY`. For the real AI chat experience, deploy the repository on Vercel and add the environment variables above.
+
+Recommended GitHub Pages settings for static hosting:
 
 - Source: Deploy from a branch
 - Branch: `main`
 - Folder: `/root`
+
+Recommended Vercel settings for AI chat:
+
+- Framework Preset: Other
+- Build Command: none
+- Output Directory: none
+- Environment Variables: `OPENAI_API_KEY`, `OPENAI_MODEL`, `SITE_ORIGIN`
 
 The entry point is `index.html`; all media assets are stored under `assets/`.

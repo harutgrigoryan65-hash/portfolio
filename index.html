@@ -695,6 +695,216 @@
         .project-card, .mini-card, .timeline, .skill-group, .edu-card {
             animation: fadeUp 0.5s ease both;
         }
+
+        /* ─── AI PORTFOLIO ASSISTANT ─── */
+        .ai-chat {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 30;
+            font-family: 'Syne', sans-serif;
+        }
+
+        .ai-chat-toggle {
+            width: 62px;
+            height: 62px;
+            border: 1px solid rgba(0,229,160,0.38);
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0f1318, #111f2a);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+            transition: transform 0.2s, border-color 0.2s, background 0.2s;
+        }
+
+        .ai-chat-toggle:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            background: linear-gradient(135deg, #101820, #123026);
+        }
+
+        .ai-chat-toggle svg {
+            width: 27px;
+            height: 27px;
+            stroke: var(--accent);
+        }
+
+        .ai-chat-panel {
+            position: absolute;
+            right: 0;
+            bottom: 78px;
+            width: min(390px, calc(100vw - 32px));
+            height: min(620px, calc(100vh - 116px));
+            background: rgba(15,19,24,0.98);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 22px 70px rgba(0,0,0,0.58);
+            display: none;
+            overflow: hidden;
+        }
+
+        .ai-chat.open .ai-chat-panel { display: grid; grid-template-rows: auto 1fr auto; }
+
+        .ai-chat-head {
+            padding: 16px 18px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .ai-chat-title {
+            color: #fff;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .ai-chat-subtitle {
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68em;
+            margin-top: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ai-chat-close {
+            width: 34px;
+            height: 34px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--surface);
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 1.1em;
+            line-height: 1;
+        }
+
+        .ai-chat-close:hover { color: #fff; border-color: rgba(0,229,160,0.3); }
+
+        .ai-chat-messages {
+            padding: 18px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .ai-message {
+            max-width: 88%;
+            padding: 11px 13px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            line-height: 1.55;
+            border: 1px solid transparent;
+            white-space: pre-wrap;
+        }
+
+        .ai-message.bot {
+            align-self: flex-start;
+            background: var(--code-bg);
+            border-color: var(--border);
+            color: var(--text);
+        }
+
+        .ai-message.user {
+            align-self: flex-end;
+            background: rgba(0,229,160,0.12);
+            border-color: rgba(0,229,160,0.25);
+            color: #eafff7;
+        }
+
+        .ai-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 2px;
+        }
+
+        .ai-suggestion {
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--surface2);
+            color: var(--muted);
+            padding: 7px 10px;
+            cursor: pointer;
+            font-size: 0.76em;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .ai-suggestion:hover {
+            color: var(--accent);
+            border-color: rgba(0,229,160,0.34);
+        }
+
+        .ai-chat-form {
+            padding: 14px;
+            border-top: 1px solid var(--border);
+            background: var(--surface2);
+            display: grid;
+            grid-template-columns: 1fr 42px;
+            gap: 10px;
+        }
+
+        .ai-chat-input {
+            min-width: 0;
+            height: 42px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--code-bg);
+            color: #fff;
+            padding: 0 12px;
+            outline: none;
+            font: inherit;
+            font-size: 0.9em;
+        }
+
+        .ai-chat-input:focus { border-color: rgba(0,229,160,0.45); }
+
+        .ai-chat-send {
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(0,229,160,0.35);
+            border-radius: 6px;
+            background: rgba(0,229,160,0.09);
+            color: var(--accent);
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+        }
+
+        .ai-chat-send:disabled {
+            opacity: 0.45;
+            cursor: wait;
+        }
+
+        .ai-chat-send svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+        }
+
+        @media (max-width: 520px) {
+            .ai-chat {
+                right: 14px;
+                bottom: 14px;
+            }
+
+            .ai-chat-panel {
+                right: -2px;
+                bottom: 72px;
+                height: min(600px, calc(100vh - 98px));
+            }
+
+            .ai-chat-toggle {
+                width: 56px;
+                height: 56px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1393,7 +1603,123 @@
 
 </div>
 
+<div class="ai-chat" id="aiChat" aria-live="polite">
+    <div class="ai-chat-panel" role="dialog" aria-label="AI portfolio assistant">
+        <div class="ai-chat-head">
+            <div>
+                <div class="ai-chat-title">Ask about Harutyun</div>
+                <div class="ai-chat-subtitle">AI portfolio assistant</div>
+            </div>
+            <button class="ai-chat-close" type="button" aria-label="Close chat" id="aiChatClose">×</button>
+        </div>
+        <div class="ai-chat-messages" id="aiChatMessages">
+            <div class="ai-message bot">Hi, I can answer questions about Harutyun's engineering experience, projects, stack, and contact details. Try asking what he can build or which projects are strongest.</div>
+            <div class="ai-suggestions" id="aiSuggestions">
+                <button class="ai-suggestion" type="button">What are his strongest projects?</button>
+                <button class="ai-suggestion" type="button">Summarize his experience</button>
+                <button class="ai-suggestion" type="button">What tech stack does he use?</button>
+                <button class="ai-suggestion" type="button">How can I contact him?</button>
+            </div>
+        </div>
+        <form class="ai-chat-form" id="aiChatForm">
+            <input class="ai-chat-input" id="aiChatInput" type="text" autocomplete="off" maxlength="500" placeholder="Ask a question..." aria-label="Ask a question about Harutyun">
+            <button class="ai-chat-send" id="aiChatSend" type="submit" aria-label="Send message">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 12h13" stroke-width="2" stroke-linecap="round"></path>
+                    <path d="M13 6l6 6-6 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </button>
+        </form>
+    </div>
+    <button class="ai-chat-toggle" type="button" id="aiChatToggle" aria-label="Open AI chat">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 8h10M7 12h7M6.4 18.2 3 21V6.8C3 4.7 4.7 3 6.8 3h10.4C19.3 3 21 4.7 21 6.8v6.4c0 2.1-1.7 3.8-3.8 3.8H8.7l-2.3 1.2Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+    </button>
+</div>
+
 <script>
+    const portfolioChatApiUrl = window.HARUT_CHAT_API_URL || "/api/chat";
+    const chatRoot = document.getElementById("aiChat");
+    const chatToggle = document.getElementById("aiChatToggle");
+    const chatClose = document.getElementById("aiChatClose");
+    const chatForm = document.getElementById("aiChatForm");
+    const chatInput = document.getElementById("aiChatInput");
+    const chatSend = document.getElementById("aiChatSend");
+    const chatMessages = document.getElementById("aiChatMessages");
+    const chatSuggestions = document.getElementById("aiSuggestions");
+    const chatHistory = [];
+
+    function toggleChat(forceOpen) {
+        const shouldOpen = typeof forceOpen === "boolean" ? forceOpen : !chatRoot.classList.contains("open");
+        chatRoot.classList.toggle("open", shouldOpen);
+        if (shouldOpen) setTimeout(function() { chatInput.focus(); }, 80);
+    }
+
+    function addChatMessage(role, text) {
+        const message = document.createElement("div");
+        message.className = "ai-message " + role;
+        message.textContent = text;
+        chatMessages.appendChild(message);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        return message;
+    }
+
+    async function askPortfolioAssistant(question) {
+        if (!question.trim()) return;
+
+        if (chatSuggestions) chatSuggestions.remove();
+
+        addChatMessage("user", question);
+        chatHistory.push({ role: "user", content: question });
+
+        chatInput.value = "";
+        chatInput.disabled = true;
+        chatSend.disabled = true;
+
+        const typing = addChatMessage("bot", "Thinking...");
+
+        try {
+            const response = await fetch(portfolioChatApiUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    message: question,
+                    history: chatHistory.slice(-8)
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Chat endpoint is not available yet.");
+            }
+
+            const data = await response.json();
+            const answer = data.answer || "I could not generate an answer right now.";
+            typing.textContent = answer;
+            chatHistory.push({ role: "assistant", content: answer });
+        } catch (error) {
+            typing.textContent = "The AI backend is not connected on this host yet. Deploy this repo on Vercel and set OPENAI_API_KEY to enable real chat responses.";
+        } finally {
+            chatInput.disabled = false;
+            chatSend.disabled = false;
+            chatInput.focus();
+        }
+    }
+
+    chatToggle.addEventListener("click", function() { toggleChat(); });
+    chatClose.addEventListener("click", function() { toggleChat(false); });
+    chatForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        askPortfolioAssistant(chatInput.value);
+    });
+
+    document.querySelectorAll(".ai-suggestion").forEach(function(button) {
+        button.addEventListener("click", function() {
+            toggleChat(true);
+            askPortfolioAssistant(button.textContent);
+        });
+    });
+
     function copyToClipboard(text, el) {
         navigator.clipboard.writeText(text).then(function() {
             const original = el.dataset.original;

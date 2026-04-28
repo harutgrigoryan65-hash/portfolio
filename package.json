@@ -1,0 +1,13 @@
+{
+  "name": "harutyun-grigoryan-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx vercel dev",
+    "check": "node --check api/chat.js"
+  },
+  "dependencies": {
+    "openai": "^6.34.0"
+  }
+}
