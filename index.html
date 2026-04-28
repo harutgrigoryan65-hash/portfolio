@@ -5,7 +5,7 @@
     <title>Harutyun Grigoryan — R&amp;D Engineering Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=Syne:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #080b0f;
@@ -27,7 +27,7 @@
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Syne', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.65;
@@ -126,7 +126,7 @@
             font-size: clamp(2.4em, 6vw, 4.2em);
             font-weight: 800;
             color: #fff;
-            letter-spacing: -2px;
+            letter-spacing: -1.5px;
             line-height: 1.05;
         }
 
@@ -898,21 +898,228 @@
             .bio { max-width: none; }
             .snapshot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .fit-strip { grid-template-columns: 1fr; }
+            .project-card { padding: 32px 30px; }
         }
 
         @media (max-width: 680px) {
-            .container { padding-top: 18px; }
+            body { line-height: 1.58; }
+
+            .container {
+                padding: 14px 14px 96px;
+            }
+
             .site-nav {
                 width: 100%;
                 justify-content: flex-start;
                 overflow-x: auto;
-                margin-bottom: 30px;
+                margin-bottom: 28px;
+                padding: 6px;
+                scrollbar-width: none;
             }
-            h1 { letter-spacing: -1px; }
+
+            .site-nav::-webkit-scrollbar { display: none; }
+
+            .site-nav a {
+                font-size: 0.64em;
+                padding: 8px 10px;
+            }
+
+            header {
+                margin-bottom: 34px;
+                padding-bottom: 32px;
+            }
+
+            .header-top {
+                gap: 22px;
+                margin-bottom: 22px;
+            }
+
+            .eyebrow-row { gap: 6px; margin-bottom: 14px; }
+
+            .eyebrow-pill {
+                font-size: 0.58em;
+                padding: 4px 8px;
+            }
+
+            h1 {
+                font-size: clamp(2.35em, 14vw, 3.35em);
+                letter-spacing: -1px;
+            }
+
+            h1 span {
+                font-size: 0.32em;
+                letter-spacing: 2px;
+                line-height: 1.35;
+            }
+
             .snapshot-grid { grid-template-columns: 1fr; }
-            .bio { padding: 20px; }
+
+            .snapshot-card {
+                padding: 14px 15px;
+            }
+
+            .snapshot-value {
+                font-size: 1.12em;
+            }
+
+            .bio {
+                padding: 18px;
+                font-size: 0.98em;
+            }
+
+            .bio-lead {
+                font-size: 1em;
+            }
+
+            .role-pill {
+                font-size: 0.62em;
+            }
+
             .hero-actions { flex-direction: column; }
             .hero-btn { width: 100%; }
+
+            .contact-row {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+
+            .contact-row a {
+                width: 100%;
+                text-align: center;
+                overflow-wrap: anywhere;
+            }
+
+            .fit-strip {
+                padding: 16px;
+                margin-bottom: 32px;
+            }
+
+            .fit-roles {
+                gap: 7px;
+            }
+
+            .fit-role {
+                font-size: 0.78em;
+                padding: 6px 10px;
+            }
+
+            .section-title {
+                align-items: flex-start;
+                gap: 10px;
+                font-size: 0.64em;
+                letter-spacing: 2px;
+                margin-top: 52px;
+                margin-bottom: 22px;
+                line-height: 1.4;
+            }
+
+            .section-title::after {
+                margin-top: 9px;
+                min-width: 28px;
+            }
+
+            .project-card,
+            .video-showcase,
+            .mini-card,
+            .skill-group,
+            .edu-card,
+            .timeline {
+                border-radius: 7px;
+            }
+
+            .project-card {
+                padding: 24px 18px;
+                margin-bottom: 24px;
+            }
+
+            .card-header {
+                gap: 8px;
+                margin-bottom: 16px;
+            }
+
+            h3 {
+                font-size: 1.1em;
+                line-height: 1.28;
+            }
+
+            .project-id {
+                white-space: normal;
+                font-size: 0.62em;
+            }
+
+            .tags,
+            .mini-tags,
+            .skill-pills {
+                gap: 6px;
+            }
+
+            .tag,
+            .mini-tag,
+            .sp {
+                font-size: 0.64em;
+                line-height: 1.35;
+            }
+
+            p.desc,
+            .step-body,
+            .mini-card .mini-desc,
+            .t-list,
+            .edu-desc {
+                font-size: 0.86em;
+            }
+
+            .logic-flow {
+                padding: 18px 15px;
+                overflow-x: auto;
+            }
+
+            .flow-step {
+                grid-template-columns: 24px minmax(0, 1fr);
+                gap: 10px;
+            }
+
+            .divider-arrow {
+                padding-left: 34px;
+            }
+
+            .code-window {
+                overflow-x: auto;
+            }
+
+            pre {
+                font-size: 0.68em;
+                padding: 18px 16px;
+                min-width: 560px;
+            }
+
+            .result-box {
+                padding: 14px 15px;
+                font-size: 0.9em;
+            }
+
+            .video-showcase {
+                padding: 22px 16px;
+            }
+
+            .showcase-intro {
+                font-size: 0.88em;
+            }
+
+            .video-meta {
+                padding: 12px 13px 14px;
+            }
+
+            .timeline {
+                padding: 24px 18px;
+            }
+
+            .t-item {
+                gap: 0 18px;
+            }
+
+            .edu-card {
+                padding: 20px 18px;
+            }
         }
 
         /* ─── AI PORTFOLIO ASSISTANT ─── */
@@ -921,7 +1128,7 @@
             right: 22px;
             bottom: 22px;
             z-index: 30;
-            font-family: 'Syne', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
         .ai-chat-toggle {
@@ -1128,19 +1335,35 @@
 
         @media (max-width: 520px) {
             .ai-chat {
-                right: 14px;
-                bottom: 14px;
+                right: 12px;
+                bottom: 12px;
             }
 
             .ai-chat-panel {
-                right: -2px;
-                bottom: 72px;
-                height: min(600px, calc(100vh - 98px));
+                position: fixed;
+                left: 10px;
+                right: 10px;
+                bottom: 78px;
+                width: auto;
+                height: min(620px, calc(100vh - 94px));
             }
 
             .ai-chat-toggle {
                 width: 56px;
                 height: 56px;
+            }
+
+            .ai-message,
+            .ai-sources {
+                max-width: 94%;
+            }
+
+            .ai-chat-head {
+                padding: 14px 15px;
+            }
+
+            .ai-chat-messages {
+                padding: 15px;
             }
         }
     </style>
