@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "npx vercel dev",
+    "deploy": "npx vercel --prod",
     "check": "node --check api/chat.js"
   },
   "dependencies": {
-    "openai": "^6.34.0"
+    "@google/genai": "^1.50.1"
   }
 }

@@ -1698,7 +1698,7 @@
             typing.textContent = answer;
             chatHistory.push({ role: "assistant", content: answer });
         } catch (error) {
-            typing.textContent = "The AI backend is not connected on this host yet. Deploy this repo on Vercel and set OPENAI_API_KEY to enable real chat responses.";
+            typing.textContent = "The AI backend is not connected on this host yet. Deploy this repo on Vercel and set GEMINI_API_KEY to enable real chat responses.";
         } finally {
             chatInput.disabled = false;
             chatSend.disabled = false;

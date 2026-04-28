@@ -1,6 +1,6 @@
-import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
 
-const model = process.env.OPENAI_MODEL || "gpt-5.4-mini";
+const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 
 const portfolioContext = `
 Harutyun Grigoryan is a Python Engineer focused on production AI automation, backend systems, Telegram bots, PostgreSQL services, Computer Vision, and hardware-integrated R&D work.
@@ -80,9 +80,9 @@ function normalizeHistory(history) {
     return history
         .slice(-8)
         .map(function(item) {
-            const role = item && item.role === "assistant" ? "assistant" : "user";
+            const role = item && item.role === "assistant" ? "model" : "user";
             const content = item && typeof item.content === "string" ? item.content.slice(0, 1000) : "";
-            return content ? { role, content } : null;
+            return content ? { role, parts: [{ text: content }] } : null;
         })
         .filter(Boolean);
 }
@@ -98,8 +98,8 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: "Method not allowed" });
     }
 
-    if (!process.env.OPENAI_API_KEY) {
-        return res.status(500).json({ error: "OPENAI_API_KEY is not configured" });
+    if (!process.env.GEMINI_API_KEY) {
+        return res.status(500).json({ error: "GEMINI_API_KEY is not configured" });
     }
 
     const message = typeof req.body?.message === "string" ? req.body.message.trim() : "";
@@ -113,22 +113,25 @@ export default async function handler(req, res) {
     }
 
     try {
-        const client = new OpenAI({
-            apiKey: process.env.OPENAI_API_KEY
+        const ai = new GoogleGenAI({
+            apiKey: process.env.GEMINI_API_KEY
         });
 
-        const response = await client.responses.create({
+        const response = await ai.models.generateContent({
             model,
-            instructions,
-            input: [
+            contents: [
                 ...normalizeHistory(req.body?.history),
-                { role: "user", content: message }
+                { role: "user", parts: [{ text: message }] }
             ],
-            max_output_tokens: 550
+            config: {
+                systemInstruction: instructions,
+                maxOutputTokens: 550,
+                temperature: 0.4
+            }
         });
 
         return res.status(200).json({
-            answer: response.output_text?.trim() || "I could not generate an answer right now."
+            answer: response.text?.trim() || "I could not generate an answer right now."
         });
     } catch (error) {
         console.error("Portfolio chat error:", error);
