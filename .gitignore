@@ -8,3 +8,4 @@ node_modules/
 dist/
 build/
 .vercel
+_brief_prompts_local/

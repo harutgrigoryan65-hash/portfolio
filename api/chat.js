@@ -32,7 +32,7 @@ const portfolioChunks = [
         id: "profile-summary",
         title: "Profile Summary",
         keywords: ["who", "about", "summary", "profile", "engineer", "python", "кто", "о нем", "профиль", "инженер"],
-        content: `Harutyun Grigoryan is a Python Engineer focused on production AI automation, backend systems, Telegram bots, PostgreSQL services, Computer Vision, and hardware-integrated R&D work. His portfolio emphasizes production-grade AI automation, event-driven services, OpenCV/OCR pipelines, local RAG knowledge-base workflows, and Arduino/relay/Raspberry Pi integrations.`
+        content: `Harutyun Grigoryan is a Python Engineer focused on production AI automation, backend systems, Telegram bots, PostgreSQL services, Computer Vision, and hardware-integrated R&D work. His portfolio emphasizes production-grade AI automation, event-driven services, OpenCV/OCR pipelines, local RAG knowledge-base workflows, Arduino/relay/Raspberry Pi integrations, and business automation tools for estimates, presentations, PDF export, and CRM/work-management integrations.`
     },
     {
         id: "contact",
@@ -43,8 +43,8 @@ const portfolioChunks = [
     {
         id: "skills-stack",
         title: "Skills And Technology Stack",
-        keywords: ["skills", "stack", "technologies", "tools", "python", "postgresql", "opencv", "ocr", "gemini", "arduino", "websocket", "навыки", "стек", "технологии"],
-        content: `Core stack: Python, backend systems, event-driven services, Telegram bots, PostgreSQL-backed applications, OpenCV, OCR/Tesseract, Gemini API, local LLM/RAG workflows, JSON chunking, TF-IDF retrieval, Tkinter GUI, Arduino, relays, Raspberry Pi, Serial communication, and WebSockets.`
+        keywords: ["skills", "stack", "technologies", "tools", "python", "postgresql", "opencv", "ocr", "gemini", "arduino", "websocket", "next", "typescript", "pdf", "pwa", "навыки", "стек", "технологии"],
+        content: `Core stack: Python, backend systems, event-driven services, Telegram bots, PostgreSQL-backed applications, OpenCV, OCR/Tesseract, Gemini API, local LLM/RAG workflows, JSON chunking, TF-IDF retrieval, Tkinter GUI, Arduino, relays, Raspberry Pi, Serial communication, WebSockets, Next.js, TypeScript, PDF generation, PWA/mobile UX, diff and rollback flows, and CRM/work-management integrations.`
     },
     {
         id: "video-demos",
@@ -55,8 +55,14 @@ const portfolioChunks = [
     {
         id: "projects",
         title: "Selected Projects",
-        keywords: ["projects", "aggregator", "ball race", "marble", "ocr", "rag", "telegram", "backend", "проекты", "агрегатор", "бот"],
-        content: `Selected projects: AGGREGATOR is an AI Agent Orchestration Service for live game-table automation. Ball Race / Marble Tracking systems use OpenCV, geometry, HSV masks, ranking, and WebSockets. OCR automation pipeline uses Tesseract for selected screen/video regions and operational traceability. Local RAG Knowledge Base uses LM Studio, TF-IDF, JSON chunking, retrieval, and a Tkinter interface. Telegram bots and backend services use Python, PostgreSQL, and production-oriented workflows.`
+        keywords: ["projects", "aggregator", "ball race", "marble", "ocr", "rag", "telegram", "backend", "estimate", "presentation", "pdf", "crm", "проекты", "агрегатор", "бот", "смета", "презентация"],
+        content: `Selected projects: AGGREGATOR is an AI Agent Orchestration Service for live game-table automation. Ball Race / Marble Tracking systems use OpenCV, geometry, HSV masks, ranking, and WebSockets. OCR automation pipeline uses Tesseract for selected screen/video regions and operational traceability. Local RAG Knowledge Base uses LM Studio, TF-IDF, JSON chunking, retrieval, and a Tkinter interface. Telegram bots and backend services use Python, PostgreSQL, and production-oriented workflows. AI Estimate & Presentation Platform work included presentation builders, A4 PDF export, version history, CRM/work-management write-paths, multi-channel chats, PWA/mobile UX improvements, AI knowledge-base separation by tool, and AI estimate editor flows with diff, apply, and rollback logic.`
+    },
+    {
+        id: "business-platform",
+        title: "Business Operations Platform Work",
+        keywords: ["estimate", "presentation", "pdf", "crm", "planfix", "pwa", "mobile", "chat", "diff", "rollback", "model", "смета", "презентация", "пдф", "чат", "откат", "мобильный"],
+        content: `Additional business-platform experience: contributed to an existing construction/business operations application. Work included a presentation tab with normalized project data, inline editing, work-day planning, equipment and materials editing, client-facing A4 PDF export, saved presentation versions, CRM/work-management file upload/write-paths, customer document approval flows, payment proof uploads, multi-channel chats with comment synchronization and duplicate protection, PWA/mobile UX improvements, custom AI model settings, AI knowledge-base separation by tool, an AI cost-estimate builder, an AI presentation editor, and AI estimate chat editing with old/new diff preview, explicit apply, rollback, saved chats, and new-dialog support.`
     },
     {
         id: "experience",
