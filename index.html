@@ -11,8 +11,10 @@
             --bg: #080b0f;
             --surface: #0f1318;
             --surface2: #161c24;
+            --surface3: #101923;
             --border: #1e2730;
             --text: #c8d4e0;
+            --text-strong: #f3f7fb;
             --muted: #5a7080;
             --accent: #00e5a0;
             --accent2: #0090ff;
@@ -21,6 +23,8 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Syne', sans-serif;
@@ -42,27 +46,80 @@
         }
 
         .container {
-            max-width: 1020px;
+            max-width: 1120px;
             margin: 0 auto;
-            padding: 70px 24px 120px;
+            padding: 34px 24px 120px;
             position: relative;
             z-index: 1;
         }
 
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            margin: 0 auto 42px;
+            padding: 8px;
+            width: fit-content;
+            max-width: 100%;
+            background: rgba(8, 11, 15, 0.84);
+            border: 1px solid rgba(30,39,48,0.82);
+            border-radius: 8px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 18px 45px rgba(0,0,0,0.24);
+        }
+
+        .site-nav a {
+            color: var(--muted);
+            text-decoration: none;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7em;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            border-radius: 5px;
+            white-space: nowrap;
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .site-nav a:hover {
+            color: var(--accent);
+            background: rgba(0,229,160,0.07);
+        }
+
         /* ─── HEADER ─── */
         header {
-            margin-bottom: 90px;
+            margin-bottom: 54px;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 50px;
+            padding-bottom: 46px;
         }
 
         .header-top {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: minmax(0, 1.02fr) minmax(340px, 0.98fr);
             align-items: flex-start;
             gap: 40px;
+            margin-bottom: 28px;
+        }
+
+        .eyebrow-row {
+            display: flex;
             flex-wrap: wrap;
-            margin-bottom: 30px;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .eyebrow-pill {
+            font-family: 'Space Mono', monospace;
+            color: var(--accent);
+            border: 1px solid rgba(0,229,160,0.25);
+            background: rgba(0,229,160,0.055);
+            border-radius: 999px;
+            padding: 5px 10px;
+            font-size: 0.66em;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         h1 {
@@ -89,9 +146,149 @@
             color: var(--muted);
             font-size: 1.05em;
             line-height: 1.7;
+            background: linear-gradient(180deg, rgba(15,19,24,0.72), rgba(15,19,24,0.36));
+            border: 1px solid rgba(30,39,48,0.86);
+            border-radius: 8px;
+            padding: 24px 26px;
         }
 
         .bio strong { color: var(--text); }
+
+        .bio-lead {
+            color: var(--text-strong);
+            font-weight: 700;
+            font-size: 1.08em;
+            margin-bottom: 10px;
+        }
+
+        .role-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .role-pill {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68em;
+            color: var(--muted);
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 5px 9px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 26px;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 38px;
+            color: var(--text);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 15px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72em;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            background: rgba(22,28,36,0.68);
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+        }
+
+        .hero-btn:hover {
+            color: #fff;
+            border-color: rgba(0,229,160,0.35);
+            background: rgba(0,229,160,0.08);
+            transform: translateY(-1px);
+        }
+
+        .hero-btn.primary {
+            color: #06100d;
+            background: var(--accent);
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+
+        .hero-btn.primary:hover {
+            color: #06100d;
+            background: #35ffc0;
+        }
+
+        .snapshot-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .snapshot-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 16px 15px;
+            min-width: 0;
+        }
+
+        .snapshot-value {
+            color: #fff;
+            font-size: 1.28em;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 6px;
+        }
+
+        .snapshot-label {
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.66em;
+            line-height: 1.4;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .fit-strip {
+            display: grid;
+            grid-template-columns: 170px 1fr;
+            gap: 18px;
+            align-items: center;
+            background: rgba(16,25,35,0.68);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 18px 20px;
+            margin-bottom: 42px;
+        }
+
+        .fit-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent2);
+        }
+
+        .fit-roles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .fit-role {
+            color: var(--text);
+            border: 1px solid rgba(0,144,255,0.24);
+            background: rgba(0,144,255,0.06);
+            border-radius: 999px;
+            padding: 6px 11px;
+            font-size: 0.82em;
+        }
 
         .contact-row {
             display: flex;
@@ -696,6 +893,28 @@
             animation: fadeUp 0.5s ease both;
         }
 
+        @media (max-width: 900px) {
+            .header-top { grid-template-columns: 1fr; }
+            .bio { max-width: none; }
+            .snapshot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .fit-strip { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 680px) {
+            .container { padding-top: 18px; }
+            .site-nav {
+                width: 100%;
+                justify-content: flex-start;
+                overflow-x: auto;
+                margin-bottom: 30px;
+            }
+            h1 { letter-spacing: -1px; }
+            .snapshot-grid { grid-template-columns: 1fr; }
+            .bio { padding: 20px; }
+            .hero-actions { flex-direction: column; }
+            .hero-btn { width: 100%; }
+        }
+
         /* ─── AI PORTFOLIO ASSISTANT ─── */
         .ai-chat {
             position: fixed;
@@ -818,6 +1037,25 @@
             color: #eafff7;
         }
 
+        .ai-sources {
+            align-self: flex-start;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            max-width: 88%;
+            margin-top: -6px;
+        }
+
+        .ai-source {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62em;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            background: rgba(10,14,19,0.72);
+            border-radius: 999px;
+            padding: 4px 8px;
+        }
+
         .ai-suggestions {
             display: flex;
             flex-wrap: wrap;
@@ -910,19 +1148,61 @@
 <body>
 <div class="container">
 
+    <nav class="site-nav" aria-label="Portfolio navigation">
+        <a href="#demos">Demos</a>
+        <a href="#projects">Projects</a>
+        <a href="#stack">Stack</a>
+        <a href="#experience">Experience</a>
+        <a href="#" data-open-chat>AI Assistant</a>
+    </nav>
+
     <!-- ═══════════════════════════════════ HEADER -->
     <header>
         <div class="header-top">
             <div>
+                <div class="eyebrow-row">
+                    <span class="eyebrow-pill">Python</span>
+                    <span class="eyebrow-pill">AI Automation</span>
+                    <span class="eyebrow-pill">Computer Vision</span>
+                </div>
                 <h1>
-                    <span>R&amp;D Engineering Portfolio</span>
+                    <span>Production R&amp;D Portfolio</span>
                     Harutyun<br>Grigoryan
                 </h1>
+                <div class="hero-actions">
+                    <a class="hero-btn primary" href="#" data-open-chat>Ask AI Assistant</a>
+                    <a class="hero-btn" href="#projects">View Projects</a>
+                    <a class="hero-btn" href="#experience">Experience</a>
+                </div>
             </div>
             <div class="bio">
-                <p>Python Engineer specializing in <strong>production-grade AI automation, backend systems, Telegram bots, and PostgreSQL-powered services</strong>.
-                I design and ship reliable agents, data pipelines, and database-backed applications — 
-                from live AI systems in high-availability studio environments to active Telegram products used in real scenarios.</p>
+                <div class="bio-lead">Python / AI Automation Engineer building production systems where software meets real hardware.</div>
+                <p>Specialized in <strong>production-grade AI automation, backend systems, Computer Vision, Telegram bots, and PostgreSQL-powered services</strong>.
+                I design and ship reliable agents, data pipelines, and database-backed applications — from live AI systems in high-availability studio environments to active Telegram products used in real scenarios.</p>
+                <div class="role-pills">
+                    <span class="role-pill">R&amp;D Engineer</span>
+                    <span class="role-pill">Backend Automation</span>
+                    <span class="role-pill">CV + Hardware</span>
+                    <span class="role-pill">RAG Systems</span>
+                </div>
+            </div>
+        </div>
+        <div class="snapshot-grid" aria-label="Recruiter snapshot">
+            <div class="snapshot-card">
+                <div class="snapshot-value">6y 4m</div>
+                <div class="snapshot-label">technical and engineering experience</div>
+            </div>
+            <div class="snapshot-card">
+                <div class="snapshot-value">4 tables</div>
+                <div class="snapshot-label">live AI automation deployment</div>
+            </div>
+            <div class="snapshot-card">
+                <div class="snapshot-value">30-40%</div>
+                <div class="snapshot-label">game speed improvement shipped</div>
+            </div>
+            <div class="snapshot-card">
+                <div class="snapshot-value">RAG + CV</div>
+                <div class="snapshot-label">AI systems built end-to-end</div>
             </div>
         </div>
         <div class="contact-row">
@@ -932,7 +1212,18 @@
         </div>
     </header>
 
-    <div class="section-title"><span class="section-num">Featured /</span> Production R&amp;D Video Demos</div>
+    <section class="fit-strip" aria-label="Best fit roles">
+        <div class="fit-title">Best Fit For</div>
+        <div class="fit-roles">
+            <span class="fit-role">Python Backend Engineer</span>
+            <span class="fit-role">AI Automation Engineer</span>
+            <span class="fit-role">Computer Vision Engineer</span>
+            <span class="fit-role">R&amp;D Engineer</span>
+            <span class="fit-role">Hardware-integrated Systems</span>
+        </div>
+    </section>
+
+    <div class="section-title" id="demos"><span class="section-num">Featured /</span> Production R&amp;D Video Demos</div>
 
     <section class="video-showcase" aria-label="Production R&amp;D video demonstrations">
         <p class="showcase-intro">
@@ -991,7 +1282,7 @@
         </div>
     </section>
 
-    <div class="section-title"><span class="section-num">01 /</span> AI Agent Orchestration &amp; Event-Driven Services</div>
+    <div class="section-title" id="projects"><span class="section-num">01 /</span> AI Agent Orchestration &amp; Event-Driven Services</div>
 
     <div class="project-card blue">
         <div class="card-header">
@@ -1411,7 +1702,7 @@
     </div>
 
     <!-- ═══════════════════════════════════ SKILLS -->
-    <div class="section-title"><span class="section-num">08 /</span> Tech Stack</div>
+    <div class="section-title" id="stack"><span class="section-num">08 /</span> Tech Stack</div>
 
     <div class="skills-grid">
 
@@ -1486,9 +1777,6 @@
             </div>
         </div>
 
-    </div>
-
-
         <div class="skill-group">
             <div class="skill-group-title">Databases</div>
             <div class="skill-pills">
@@ -1499,6 +1787,8 @@
                 <span class="sp">CRUD Operations</span>
             </div>
         </div>
+
+    </div>
 
     <!-- ═══════════════════════════════════ EDUCATION -->
     <div class="section-title"><span class="section-num">09 /</span> Education &amp; Certifications</div>
@@ -1532,7 +1822,7 @@
     </div>
 
     <!-- ═══════════════════════════════════ WORK EXPERIENCE -->
-    <div class="section-title"><span class="section-num">10 /</span> Work Experience</div>
+    <div class="section-title" id="experience"><span class="section-num">10 /</span> Work Experience</div>
 
     <div class="timeline">
 
@@ -1665,6 +1955,23 @@
         return message;
     }
 
+    function addChatSources(sources) {
+        if (!Array.isArray(sources) || sources.length === 0) return;
+
+        const sourceRow = document.createElement("div");
+        sourceRow.className = "ai-sources";
+
+        sources.slice(0, 4).forEach(function(source) {
+            const chip = document.createElement("span");
+            chip.className = "ai-source";
+            chip.textContent = source.title || source.id || "Portfolio chunk";
+            sourceRow.appendChild(chip);
+        });
+
+        chatMessages.appendChild(sourceRow);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
     async function askPortfolioAssistant(question) {
         if (!question.trim()) return;
 
@@ -1678,7 +1985,7 @@
         chatInput.disabled = true;
         chatSend.disabled = true;
 
-        const typing = addChatMessage("bot", "Thinking...");
+        const typing = addChatMessage("bot", "Searching portfolio knowledge...");
 
         try {
             const response = await fetch(portfolioChatApiUrl, {
@@ -1697,6 +2004,7 @@
             const data = await response.json();
             const answer = data.answer || "I could not generate an answer right now.";
             typing.textContent = answer;
+            addChatSources(data.sources);
             chatHistory.push({ role: "assistant", content: answer });
         } catch (error) {
             typing.textContent = "The AI backend is not connected on this host yet. Deploy this repo on Vercel and set GEMINI_API_KEY to enable real chat responses.";
@@ -1718,6 +2026,13 @@
         button.addEventListener("click", function() {
             toggleChat(true);
             askPortfolioAssistant(button.textContent);
+        });
+    });
+
+    document.querySelectorAll("[data-open-chat]").forEach(function(link) {
+        link.addEventListener("click", function(event) {
+            event.preventDefault();
+            toggleChat(true);
         });
     });
 
