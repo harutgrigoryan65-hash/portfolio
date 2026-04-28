@@ -244,14 +244,36 @@ function friendlyAnswer(message) {
 
 function missingInfoAnswer(message) {
     if (usesRussian(message)) {
-        return "В портфолио нет информации по этому вопросу. Лучше связаться с Harutyun напрямую: harut.grigoryan.65@gmail.com или +374 33 336 646.";
+        return "В портфолио нет информации по этому вопросу. Можешь нажать кнопку Contact Harutyun в чате, чтобы написать ему напрямую.";
     }
 
     if (detectLanguage(message) === "hy-latn") {
-        return "Պորտֆոլիոյում այս հարցի մասին տեղեկություն չկա։ Ավելի ճիշտ կլինի կապ հաստատել Հարությունի հետ՝ harut.grigoryan.65@gmail.com կամ +374 33 336 646։";
+        return "Պորտֆոլիոյում այս հարցի մասին տեղեկություն չկա։ Կարող ես սեղմել Contact Harutyun կոճակը chat-ում եւ գրել նրան անմիջապես։";
     }
 
-    return "The portfolio does not include information about that. It is best to contact Harutyun directly: harut.grigoryan.65@gmail.com or +374 33 336 646.";
+    return "The portfolio does not include information about that. You can use the Contact Harutyun button in this chat to message him directly.";
+}
+
+function isContactRequest(message) {
+    const normalized = normalizeText(message);
+
+    return [
+        "contact",
+        "email",
+        "phone",
+        "linkedin",
+        "reach",
+        "hire",
+        "связаться",
+        "почта",
+        "телефон",
+        "контакт",
+        "линкедин",
+        "kap",
+        "կապ"
+    ].some(function(keyword) {
+        return normalized.includes(normalizeText(keyword));
+    });
 }
 
 function buildInstructions(retrievedContext) {
@@ -317,6 +339,7 @@ export default async function handler(req, res) {
     }
 
     const message = typeof req.body?.message === "string" ? req.body.message.trim() : "";
+    const wantsContact = isContactRequest(message);
 
     if (!message) {
         return res.status(400).json({ error: "Message is required" });
@@ -331,15 +354,19 @@ export default async function handler(req, res) {
     if (friendlyResponse) {
         return res.status(200).json({
             answer: friendlyResponse,
-            sources: []
+            sources: [],
+            suggestContact: wantsContact
         });
     }
 
     const retrievedChunks = retrieveChunks(message, req.body?.history);
 
     if (!retrievedChunks.length) {
+        const answer = missingInfoAnswer(message);
+
         return res.status(200).json({
-            answer: missingInfoAnswer(message)
+            answer,
+            suggestContact: true
         });
     }
 
@@ -361,15 +388,18 @@ export default async function handler(req, res) {
                 temperature: 0.25
             }
         });
+        const answer = response.text?.trim() || "I could not generate an answer right now.";
+        const sources = retrievedChunks.map(function(chunk) {
+            return {
+                id: chunk.id,
+                title: chunk.title
+            };
+        });
 
         return res.status(200).json({
-            answer: response.text?.trim() || "I could not generate an answer right now.",
-            sources: retrievedChunks.map(function(chunk) {
-                return {
-                    id: chunk.id,
-                    title: chunk.title
-                };
-            })
+            answer,
+            sources,
+            suggestContact: wantsContact || sources.some(function(source) { return source.id === "contact"; })
         });
     } catch (error) {
         console.error("Portfolio chat error:", error);

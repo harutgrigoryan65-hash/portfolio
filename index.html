@@ -1183,6 +1183,13 @@
             gap: 12px;
         }
 
+        .ai-chat-head-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
         .ai-chat-title {
             color: #fff;
             font-weight: 700;
@@ -1198,19 +1205,43 @@
             letter-spacing: 1px;
         }
 
-        .ai-chat-close {
-            width: 34px;
-            height: 34px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
+	        .ai-chat-close {
+	            width: 34px;
+	            height: 34px;
+	            border: 1px solid var(--border);
+	            border-radius: 6px;
             background: var(--surface);
             color: var(--muted);
             cursor: pointer;
             font-size: 1.1em;
             line-height: 1;
+	        }
+
+	        .ai-chat-close:hover { color: #fff; border-color: rgba(0,229,160,0.3); }
+
+        .ai-human-exit {
+            height: 34px;
+            border: 1px solid rgba(255,209,102,0.36);
+            border-radius: 6px;
+            background: rgba(255,209,102,0.09);
+            color: #ffe4a1;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            padding: 0 10px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.66em;
+            text-transform: uppercase;
         }
 
-        .ai-chat-close:hover { color: #fff; border-color: rgba(0,229,160,0.3); }
+        .ai-chat.human .ai-human-exit {
+            display: inline-flex;
+        }
+
+        .ai-human-exit:hover {
+            border-color: rgba(255,209,102,0.6);
+            color: #fff4cf;
+        }
 
         .ai-chat-messages {
             padding: 18px;
@@ -1218,6 +1249,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
+            min-height: 0;
         }
 
         .ai-message {
@@ -1244,6 +1276,13 @@
             color: #eafff7;
         }
 
+        .ai-message.owner {
+            align-self: flex-start;
+            background: rgba(255,209,102,0.1);
+            border-color: rgba(255,209,102,0.28);
+            color: #fff4cf;
+        }
+
         .ai-sources {
             align-self: flex-start;
             display: flex;
@@ -1253,15 +1292,22 @@
             margin-top: -6px;
         }
 
-        .ai-source {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.62em;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            background: rgba(10,14,19,0.72);
-            border-radius: 999px;
-            padding: 4px 8px;
-        }
+	        .ai-source {
+	            font-family: 'Space Mono', monospace;
+	            font-size: 0.62em;
+	            color: var(--muted);
+	            border: 1px solid var(--border);
+	            background: rgba(10,14,19,0.72);
+	            border-radius: 999px;
+	            padding: 4px 8px;
+	            cursor: pointer;
+	            text-align: left;
+	        }
+
+	        .ai-source:hover {
+	            color: var(--accent);
+	            border-color: rgba(0,229,160,0.34);
+	        }
 
         .ai-suggestions {
             display: flex;
@@ -1286,8 +1332,32 @@
             border-color: rgba(0,229,160,0.34);
         }
 
+        .ai-contact-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .ai-human-button {
+            border: 1px solid rgba(255,209,102,0.36);
+            border-radius: 6px;
+            background: rgba(255,209,102,0.1);
+            color: #ffe4a1;
+            padding: 8px 11px;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72em;
+        }
+
+        .ai-human-button:hover {
+            border-color: rgba(255,209,102,0.58);
+            color: #fff4cf;
+        }
+
         .ai-chat-form {
             padding: 14px;
+            padding-bottom: max(14px, env(safe-area-inset-bottom));
             border-top: 1px solid var(--border);
             background: var(--surface2);
             display: grid;
@@ -1333,39 +1403,67 @@
             stroke: currentColor;
         }
 
-        @media (max-width: 520px) {
-            .ai-chat {
-                right: 12px;
-                bottom: 12px;
-            }
+	        @media (max-width: 520px) {
+	            .ai-chat {
+	                right: 12px;
+	                bottom: 12px;
+	            }
 
-            .ai-chat-panel {
-                position: fixed;
-                left: 10px;
-                right: 10px;
-                bottom: 78px;
-                width: auto;
-                height: min(620px, calc(100vh - 94px));
-            }
+                .ai-chat.open {
+                    inset: 0;
+                }
 
-            .ai-chat-toggle {
-                width: 56px;
-                height: 56px;
-            }
+                .ai-chat.open .ai-chat-toggle {
+                    display: none;
+                }
+
+	            .ai-chat-panel {
+	                position: fixed;
+                    top: max(10px, env(safe-area-inset-top));
+                    right: max(10px, env(safe-area-inset-right));
+                    bottom: max(10px, env(safe-area-inset-bottom));
+                    left: max(10px, env(safe-area-inset-left));
+	                width: auto;
+	                height: auto;
+                    max-height: none;
+	            }
+
+	            .ai-chat-toggle {
+	                width: 56px;
+	                height: 56px;
+	            }
 
             .ai-message,
-            .ai-sources {
-                max-width: 94%;
-            }
+                .ai-sources,
+                .ai-contact-actions {
+                    max-width: 94%;
+                }
 
-            .ai-chat-head {
-                padding: 14px 15px;
-            }
+	            .ai-chat-head {
+	                padding: 14px 15px;
+                    align-items: flex-start;
+	            }
 
-            .ai-chat-messages {
-                padding: 15px;
-            }
-        }
+	            .ai-chat-messages {
+	                padding: 15px;
+	            }
+
+                .ai-chat-input {
+                    font-size: 16px;
+                }
+
+                .ai-human-exit {
+                    width: 34px;
+                    justify-content: center;
+                    padding: 0;
+                    font-size: 0;
+                }
+
+                .ai-human-exit::before {
+                    content: "End";
+                    font-size: 10px;
+                }
+	        }
     </style>
 </head>
 <body>
@@ -2187,22 +2285,28 @@
 
 <div class="ai-chat" id="aiChat" aria-live="polite">
     <div class="ai-chat-panel" role="dialog" aria-label="AI portfolio assistant">
-        <div class="ai-chat-head">
-            <div>
-                <div class="ai-chat-title">Ask about Harutyun</div>
-                <div class="ai-chat-subtitle">AI portfolio assistant</div>
-            </div>
-            <button class="ai-chat-close" type="button" aria-label="Close chat" id="aiChatClose">×</button>
-        </div>
+	        <div class="ai-chat-head">
+	            <div>
+	                <div class="ai-chat-title">Ask about Harutyun</div>
+	                <div class="ai-chat-subtitle" id="aiChatSubtitle">AI portfolio assistant</div>
+	            </div>
+	            <div class="ai-chat-head-controls">
+	                <button class="ai-human-exit" type="button" id="aiHumanExit">End</button>
+	                <button class="ai-chat-close" type="button" aria-label="Close chat" id="aiChatClose">×</button>
+	            </div>
+	        </div>
         <div class="ai-chat-messages" id="aiChatMessages">
             <div class="ai-message bot">Hi, I can answer questions about Harutyun's engineering experience, projects, stack, and contact details. Try asking what he can build or which projects are strongest.</div>
             <div class="ai-suggestions" id="aiSuggestions">
                 <button class="ai-suggestion" type="button">What are his strongest projects?</button>
                 <button class="ai-suggestion" type="button">Summarize his experience</button>
-                <button class="ai-suggestion" type="button">What tech stack does he use?</button>
-                <button class="ai-suggestion" type="button">How can I contact him?</button>
-            </div>
-        </div>
+	                <button class="ai-suggestion" type="button">What tech stack does he use?</button>
+	                <button class="ai-suggestion" type="button">How can I contact him?</button>
+	            </div>
+	            <div class="ai-contact-actions" id="aiContactActions">
+	                <button class="ai-human-button" type="button" id="aiHumanButton">Contact Harutyun</button>
+	            </div>
+	        </div>
         <form class="ai-chat-form" id="aiChatForm">
             <input class="ai-chat-input" id="aiChatInput" type="text" autocomplete="off" maxlength="500" placeholder="Ask a question..." aria-label="Ask a question about Harutyun">
             <button class="ai-chat-send" id="aiChatSend" type="submit" aria-label="Send message">
@@ -2220,17 +2324,24 @@
     </button>
 </div>
 
-<script>
-    const portfolioChatApiUrl = window.HARUT_CHAT_API_URL || "/api/chat";
-    const chatRoot = document.getElementById("aiChat");
-    const chatToggle = document.getElementById("aiChatToggle");
-    const chatClose = document.getElementById("aiChatClose");
-    const chatForm = document.getElementById("aiChatForm");
-    const chatInput = document.getElementById("aiChatInput");
-    const chatSend = document.getElementById("aiChatSend");
-    const chatMessages = document.getElementById("aiChatMessages");
-    const chatSuggestions = document.getElementById("aiSuggestions");
-    const chatHistory = [];
+	<script>
+	    const portfolioChatApiUrl = window.HARUT_CHAT_API_URL || "/api/chat";
+	    const humanChatApiUrl = window.HARUT_HUMAN_CHAT_API_URL || "/api/human-chat";
+	    const chatRoot = document.getElementById("aiChat");
+	    const chatToggle = document.getElementById("aiChatToggle");
+	    const chatClose = document.getElementById("aiChatClose");
+	    const chatForm = document.getElementById("aiChatForm");
+	    const chatInput = document.getElementById("aiChatInput");
+	    const chatSend = document.getElementById("aiChatSend");
+	    const chatMessages = document.getElementById("aiChatMessages");
+	    const chatSubtitle = document.getElementById("aiChatSubtitle");
+	    const chatSuggestions = document.getElementById("aiSuggestions");
+	    const aiHumanButton = document.getElementById("aiHumanButton");
+	    const aiHumanExit = document.getElementById("aiHumanExit");
+	    const chatHistory = [];
+	    let humanMode = sessionStorage.getItem("harut_human_chat_active") === "1";
+	    let humanSessionId = sessionStorage.getItem("harut_human_chat_session") || "";
+	    let humanPollTimer = null;
 
     function toggleChat(forceOpen) {
         const shouldOpen = typeof forceOpen === "boolean" ? forceOpen : !chatRoot.classList.contains("open");
@@ -2247,25 +2358,233 @@
         return message;
     }
 
-    function addChatSources(sources) {
-        if (!Array.isArray(sources) || sources.length === 0) return;
+	    function getSourceFollowUp(source) {
+	        const title = source.title || source.id || "this portfolio section";
+	        const prompts = {
+	            "profile-summary": "Tell me more about Harutyun's profile summary.",
+	            "contact": "How can I contact Harutyun?",
+	            "skills-stack": "Tell me more about Harutyun's skills and technology stack.",
+	            "video-demos": "Tell me more about Harutyun's production R&D video demonstrations.",
+	            "projects": "Tell me more about Harutyun's selected projects.",
+	            "business-platform": "Tell me more about Harutyun's business operations platform work.",
+	            "experience": "Tell me more about Harutyun's work experience.",
+	            "experience-summary": "Summarize Harutyun's total experience.",
+	            "education": "Tell me more about Harutyun's education and certifications."
+	        };
 
-        const sourceRow = document.createElement("div");
-        sourceRow.className = "ai-sources";
+	        return prompts[source.id] || `Tell me more about ${title}.`;
+	    }
 
-        sources.slice(0, 4).forEach(function(source) {
-            const chip = document.createElement("span");
-            chip.className = "ai-source";
-            chip.textContent = source.title || source.id || "Portfolio chunk";
-            sourceRow.appendChild(chip);
-        });
+	    function addChatSources(sources) {
+	        if (!Array.isArray(sources) || sources.length === 0) return;
 
-        chatMessages.appendChild(sourceRow);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
+	        const sourceRow = document.createElement("div");
+	        sourceRow.className = "ai-sources";
 
-    async function askPortfolioAssistant(question) {
-        if (!question.trim()) return;
+	        sources.slice(0, 4).forEach(function(source) {
+	            const chip = document.createElement("button");
+	            chip.className = "ai-source";
+	            chip.type = "button";
+	            chip.textContent = source.title || source.id || "Portfolio chunk";
+	            chip.addEventListener("click", function() {
+	                if (!humanMode) askPortfolioAssistant(getSourceFollowUp(source));
+	            });
+	            sourceRow.appendChild(chip);
+	        });
+
+	        chatMessages.appendChild(sourceRow);
+	        chatMessages.scrollTop = chatMessages.scrollHeight;
+	    }
+
+	    function generateHumanSessionId() {
+	        return (Date.now().toString(36) + Math.random().toString(36).slice(2, 14)).replace(/[^a-z0-9]/gi, "");
+	    }
+
+	    function getHumanSessionId() {
+	        if (!humanSessionId) {
+	            humanSessionId = generateHumanSessionId();
+	            sessionStorage.setItem("harut_human_chat_session", humanSessionId);
+	        }
+
+	        return humanSessionId;
+	    }
+
+	    function getLastHumanUpdateId() {
+	        const key = "harut_human_chat_last_update_" + getHumanSessionId();
+	        return Number(sessionStorage.getItem(key) || "0");
+	    }
+
+	    function setLastHumanUpdateId(updateId) {
+	        const key = "harut_human_chat_last_update_" + getHumanSessionId();
+	        sessionStorage.setItem(key, String(updateId || 0));
+	    }
+
+	    function setHumanModeUi() {
+	        humanMode = true;
+	        sessionStorage.setItem("harut_human_chat_active", "1");
+	        chatRoot.classList.add("human");
+	        chatSubtitle.textContent = "direct chat with Harutyun";
+	        chatInput.placeholder = "Write to Harutyun...";
+	        chatInput.setAttribute("aria-label", "Write to Harutyun");
+	    }
+
+	    function resetHumanModeUi() {
+	        humanMode = false;
+	        sessionStorage.removeItem("harut_human_chat_active");
+	        chatRoot.classList.remove("human");
+	        chatSubtitle.textContent = "AI portfolio assistant";
+	        chatInput.placeholder = "Ask a question...";
+	        chatInput.setAttribute("aria-label", "Ask a question about Harutyun");
+
+	        if (humanPollTimer) {
+	            window.clearInterval(humanPollTimer);
+	            humanPollTimer = null;
+	        }
+	    }
+
+	    function clearHumanSession() {
+	        const previousSessionId = humanSessionId;
+	        resetHumanModeUi();
+	        humanSessionId = "";
+	        sessionStorage.removeItem("harut_human_chat_session");
+
+	        if (previousSessionId) {
+	            sessionStorage.removeItem("harut_human_chat_last_update_" + previousSessionId);
+	        }
+	    }
+
+	    async function callHumanChat(action, payload) {
+	        const response = await fetch(humanChatApiUrl, {
+	            method: "POST",
+	            headers: { "Content-Type": "application/json" },
+	            body: JSON.stringify({
+	                action,
+	                sessionId: getHumanSessionId(),
+	                ...payload
+	            })
+	        });
+
+	        if (!response.ok) {
+	            throw new Error("Human chat endpoint failed.");
+	        }
+
+	        return response.json();
+	    }
+
+	    function addContactPrompt() {
+	        const existingPrompt = chatMessages.querySelector(".ai-contact-inline");
+	        if (existingPrompt) return;
+
+	        const row = document.createElement("div");
+	        row.className = "ai-contact-actions ai-contact-inline";
+
+	        const button = document.createElement("button");
+	        button.className = "ai-human-button";
+	        button.type = "button";
+	        button.textContent = "Contact Harutyun";
+	        button.addEventListener("click", function() {
+	            startHumanChat("Visitor clicked Contact Harutyun after the AI could not answer from portfolio knowledge.");
+	        });
+
+	        row.appendChild(button);
+	        chatMessages.appendChild(row);
+	        chatMessages.scrollTop = chatMessages.scrollHeight;
+	    }
+
+	    async function startHumanChat(context) {
+	        toggleChat(true);
+	        if (humanMode) {
+	            chatInput.focus();
+	            return;
+	        }
+
+	        setHumanModeUi();
+	        addChatMessage("bot", "Harutyun has been notified. Keep this chat open and write your message here.");
+	        chatInput.disabled = true;
+	        chatSend.disabled = true;
+
+	        try {
+	            await callHumanChat("connect", { context: context || "" });
+	            startHumanPolling();
+	        } catch (error) {
+	            addChatMessage("bot", "I could not notify Harutyun right now. Please try again in a moment.");
+	        } finally {
+	            chatInput.disabled = false;
+	            chatSend.disabled = false;
+	            chatInput.focus();
+	        }
+	    }
+
+	    async function sendHumanMessage(text) {
+	        const content = text.trim();
+	        if (!content) return;
+
+	        addChatMessage("user", content);
+	        chatInput.value = "";
+	        chatInput.disabled = true;
+	        chatSend.disabled = true;
+
+	        try {
+	            await callHumanChat("message", { content });
+	            startHumanPolling();
+	        } catch (error) {
+	            addChatMessage("bot", "Message was not sent to Harutyun. Please try again.");
+	        } finally {
+	            chatInput.disabled = false;
+	            chatSend.disabled = false;
+	            chatInput.focus();
+	        }
+	    }
+
+	    async function endHumanChat() {
+	        if (!humanMode) return;
+
+	        chatInput.disabled = true;
+	        chatSend.disabled = true;
+
+	        try {
+	            await callHumanChat("leave", { reason: "Visitor ended the direct chat from the website." });
+	        } catch (error) {
+	            // End the local direct-chat state even if the notification cannot be delivered.
+	        } finally {
+	            clearHumanSession();
+	            addChatMessage("bot", "Direct chat ended. You can keep asking the AI assistant here.");
+	            chatInput.disabled = false;
+	            chatSend.disabled = false;
+	            chatInput.focus();
+	        }
+	    }
+
+	    async function pollHumanReplies() {
+	        if (!humanMode || !humanSessionId) return;
+
+	        try {
+	            const data = await callHumanChat("poll", {
+	                lastUpdateId: getLastHumanUpdateId()
+	            });
+
+	            if (Number.isFinite(data.nextUpdateId)) {
+	                setLastHumanUpdateId(data.nextUpdateId);
+	            }
+
+	            if (Array.isArray(data.messages)) {
+	                data.messages.forEach(function(message) {
+	                    addChatMessage("owner", message.content);
+	                });
+	            }
+	        } catch (error) {
+	            // Keep polling quiet; the next tick can recover.
+	        }
+	    }
+
+	    function startHumanPolling() {
+	        if (humanPollTimer) return;
+	        pollHumanReplies();
+	        humanPollTimer = window.setInterval(pollHumanReplies, 4000);
+	    }
+
+	    async function askPortfolioAssistant(question) {
+	        if (!question.trim()) return;
 
         if (chatSuggestions) chatSuggestions.remove();
 
@@ -2294,12 +2613,13 @@
             }
 
             const data = await response.json();
-            const answer = data.answer || "I could not generate an answer right now.";
-            typing.textContent = answer;
-            addChatSources(data.sources);
-            chatHistory.push({ role: "assistant", content: answer });
-        } catch (error) {
-            typing.textContent = "The AI backend is not connected on this host yet. Deploy this repo on Vercel and set GEMINI_API_KEY to enable real chat responses.";
+	            const answer = data.answer || "I could not generate an answer right now.";
+	            typing.textContent = answer;
+	            addChatSources(data.sources);
+	            if (data.suggestContact) addContactPrompt();
+	            chatHistory.push({ role: "assistant", content: answer });
+	        } catch (error) {
+	            typing.textContent = "The AI backend is not connected on this host yet. Deploy this repo on Vercel and set GEMINI_API_KEY to enable real chat responses.";
         } finally {
             chatInput.disabled = false;
             chatSend.disabled = false;
@@ -2307,15 +2627,30 @@
         }
     }
 
-    chatToggle.addEventListener("click", function() { toggleChat(); });
-    chatClose.addEventListener("click", function() { toggleChat(false); });
-    chatForm.addEventListener("submit", function(event) {
-        event.preventDefault();
-        askPortfolioAssistant(chatInput.value);
-    });
+	    chatToggle.addEventListener("click", function() { toggleChat(); });
+	    chatClose.addEventListener("click", function() { toggleChat(false); });
+	    chatForm.addEventListener("submit", function(event) {
+	        event.preventDefault();
+	        if (humanMode) {
+	            sendHumanMessage(chatInput.value);
+	        } else {
+	            askPortfolioAssistant(chatInput.value);
+	        }
+	    });
 
-    document.querySelectorAll(".ai-suggestion").forEach(function(button) {
-        button.addEventListener("click", function() {
+	    aiHumanButton.addEventListener("click", function() {
+	        const lastUserMessage = chatHistory
+	            .filter(function(message) { return message.role === "user"; })
+	            .slice(-1)[0]?.content || "";
+	        startHumanChat(lastUserMessage ? `Latest visitor question: ${lastUserMessage}` : "Visitor clicked Contact Harutyun.");
+	    });
+
+	    aiHumanExit.addEventListener("click", function() {
+	        endHumanChat();
+	    });
+
+	    document.querySelectorAll(".ai-suggestion").forEach(function(button) {
+	        button.addEventListener("click", function() {
             toggleChat(true);
             askPortfolioAssistant(button.textContent);
         });
@@ -2324,9 +2659,14 @@
     document.querySelectorAll("[data-open-chat]").forEach(function(link) {
         link.addEventListener("click", function(event) {
             event.preventDefault();
-            toggleChat(true);
-        });
-    });
+	            toggleChat(true);
+	        });
+	    });
+
+	    if (humanMode && humanSessionId) {
+	        setHumanModeUi();
+	        startHumanPolling();
+	    }
 
     function copyToClipboard(text, el) {
         navigator.clipboard.writeText(text).then(function() {
