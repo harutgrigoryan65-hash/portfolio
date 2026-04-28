@@ -172,9 +172,83 @@ function usesRussian(text) {
     return /[а-яё]/i.test(text);
 }
 
+function detectLanguage(text) {
+    const normalized = normalizeText(text);
+
+    if (usesRussian(text)) return "ru";
+
+    if (/\b(barev|barev dzez|vonc|vonces|inch|inchka|inch ka|lav|shnorhakal|merci|hajox|hajogh|apres)\b/i.test(normalized)) {
+        return "hy-latn";
+    }
+
+    return "en";
+}
+
+function startsWithAnyPhrase(text, phrases) {
+    const normalized = normalizeText(text);
+    return phrases.some(function(phrase) {
+        const normalizedPhrase = normalizeText(phrase);
+        return normalized === normalizedPhrase || normalized.startsWith(`${normalizedPhrase} `);
+    });
+}
+
+function isGreeting(message) {
+    return startsWithAnyPhrase(message, [
+        "hi", "hello", "hey", "good morning", "good afternoon", "good evening",
+        "привет", "здравствуй", "здравствуйте", "добрый день", "доброе утро", "добрый вечер",
+        "barev", "barev dzez", "voghjuyn", "барев"
+    ]);
+}
+
+function isThanks(message) {
+    return startsWithAnyPhrase(message, [
+        "thanks", "thank you", "thx", "спасибо", "благодарю", "shnorhakal", "merci", "апрес", "apres"
+    ]);
+}
+
+function isHowAreYou(message) {
+    const normalized = normalizeText(message);
+    return normalized.includes("how are you")
+        || normalized.includes("how r u")
+        || normalized.includes("как дела")
+        || normalized.includes("как ты")
+        || normalized.includes("vonc es")
+        || normalized.includes("vonces")
+        || normalized.includes("inch ka")
+        || normalized.includes("inchka");
+}
+
+function friendlyAnswer(message) {
+    const language = detectLanguage(message);
+
+    if (isThanks(message)) {
+        if (language === "ru") return "Пожалуйста. Можешь спросить меня про опыт Harutyun, проекты, стек, AI/RAG-системы или контакты.";
+        if (language === "hy-latn") return "Khndrem. Karogh es hartsnel Harutyun-i pordzi, project-neri, tech stack-i kam contact-neri masin.";
+        return "You're welcome. You can ask me about Harutyun's experience, projects, tech stack, AI/RAG systems, or contact details.";
+    }
+
+    if (isHowAreYou(message)) {
+        if (language === "ru") return "Всё хорошо, я готов помочь с портфолио Harutyun. Можешь спросить: сколько у него опыта, какие проекты самые сильные, какой стек, или как с ним связаться.";
+        if (language === "hy-latn") return "Lav em, patrast em ognel Harutyun-i portfolio-i masin. Karogh es hartsnel pordzi, project-neri, tech stack-i kam contact-neri masin.";
+        return "I'm doing well and ready to help with Harutyun's portfolio. You can ask about his experience, strongest projects, tech stack, or contact details.";
+    }
+
+    if (isGreeting(message)) {
+        if (language === "ru") return "Привет. Я AI-ассистент портфолио Harutyun. Могу рассказать про его опыт, проекты, стек, AI/RAG-системы, сметы/презентации или контакты.";
+        if (language === "hy-latn") return "Barev. Es Harutyun-i portfolio-i AI assistant-n em. Karogh em patmel ira pordzi, project-neri, tech stack-i, AI/RAG hamakargeri kam contact-neri masin.";
+        return "Hi. I'm Harutyun's portfolio AI assistant. I can tell you about his experience, projects, tech stack, AI/RAG systems, estimate/presentation platform work, or contact details.";
+    }
+
+    return null;
+}
+
 function missingInfoAnswer(message) {
     if (usesRussian(message)) {
         return "В портфолио нет информации по этому вопросу. Лучше связаться с Harutyun напрямую: harut.grigoryan.65@gmail.com или +374 33 336 646.";
+    }
+
+    if (detectLanguage(message) === "hy-latn") {
+        return "Portfolio-um ays hartsov informacia chka. Lav klini kap hastatel Harutyun-i het: harut.grigoryan.65@gmail.com kam +374 33 336 646.";
     }
 
     return "The portfolio does not include information about that. It is best to contact Harutyun directly: harut.grigoryan.65@gmail.com or +374 33 336 646.";
@@ -249,6 +323,15 @@ export default async function handler(req, res) {
 
     if (message.length > 500) {
         return res.status(400).json({ error: "Message is too long" });
+    }
+
+    const friendlyResponse = friendlyAnswer(message);
+
+    if (friendlyResponse) {
+        return res.status(200).json({
+            answer: friendlyResponse,
+            sources: []
+        });
     }
 
     const retrievedChunks = retrieveChunks(message, req.body?.history);
