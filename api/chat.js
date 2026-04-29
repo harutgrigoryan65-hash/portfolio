@@ -31,7 +31,7 @@ const portfolioChunks = [
     {
         id: "profile-summary",
         title: "Profile Summary",
-        keywords: ["who", "about", "summary", "profile", "engineer", "python", "fullstack", "full-stack", "frontend", "backend", "ai", "кто", "о нем", "профиль", "инженер", "фулстек"],
+        keywords: ["who", "about", "summary", "profile", "engineer", "python", "fullstack", "full-stack", "frontend", "backend", "ai", "кто", "о нем", "профиль", "инженер", "фулстек", "nra masin", "ir masin", "harutyuni masin", "inch kases", "ov e"],
         content: `Harutyun Grigoryan is an AI Full-Stack Engineer focused on AI-enabled products, production automation, backend systems, frontend workflows, Telegram bots, PostgreSQL services, Computer Vision, and hardware-integrated R&D work. His portfolio emphasizes end-to-end product engineering: web apps, backend APIs, AI automation, event-driven services, OpenCV/OCR pipelines, local RAG knowledge-base workflows, Arduino/relay/Raspberry Pi integrations, and business automation tools for estimates, presentations, PDF export, and CRM/work-management integrations.`
     },
     {
@@ -89,7 +89,8 @@ const stopWords = new Set([
     "a", "an", "the", "and", "or", "for", "with", "what", "who", "how", "his", "her", "him", "about",
     "does", "can", "you", "is", "are", "was", "were", "to", "of", "in", "on", "at", "from", "this", "that",
     "что", "как", "кто", "его", "про", "или", "это", "есть", "мне", "он", "она", "сколько", "какой", "какая",
-    "какие", "какое", "где", "чем", "для", "при", "из", "на", "по", "ли"
+    "какие", "какое", "где", "чем", "для", "при", "из", "на", "по", "ли",
+    "inch", "nra", "ira", "ir", "masin", "ov", "e", "vor", "vortex", "karox", "karogh", "es", "du"
 ]);
 
 function normalizeText(text) {
@@ -184,16 +185,51 @@ function detectLanguage(text) {
     return "en";
 }
 
-function startsWithAnyPhrase(text, phrases) {
+function escapeRegExp(text) {
+    return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function hasWholePhrase(text, phrase) {
     const normalized = normalizeText(text);
+    const normalizedPhrase = normalizeText(phrase);
+
+    if (!normalized || !normalizedPhrase) return false;
+
+    return new RegExp(`(^| )${escapeRegExp(normalizedPhrase)}( |$)`).test(normalized);
+}
+
+function equalsAnyPhrase(text, phrases) {
+    const normalized = normalizeText(text);
+
+    return phrases.some(function(phrase) {
+        return normalized === normalizeText(phrase);
+    });
+}
+
+function isStandaloneFriendlyPhrase(text, phrases) {
+    const normalized = normalizeText(text);
+    const softTrailingWords = new Set(["there", "all", "jan", "aper", "axper", "dzez", "bro"]);
+
     return phrases.some(function(phrase) {
         const normalizedPhrase = normalizeText(phrase);
-        return normalized === normalizedPhrase || normalized.startsWith(`${normalizedPhrase} `);
+
+        if (normalized === normalizedPhrase) return true;
+        if (!normalized.startsWith(`${normalizedPhrase} `)) return false;
+
+        const restTokens = normalized
+            .slice(normalizedPhrase.length)
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean);
+
+        return restTokens.length > 0
+            && restTokens.length <= 2
+            && restTokens.every(function(token) { return softTrailingWords.has(token); });
     });
 }
 
 function isGreeting(message) {
-    return startsWithAnyPhrase(message, [
+    return isStandaloneFriendlyPhrase(message, [
         "hi", "hello", "hey", "good morning", "good afternoon", "good evening",
         "привет", "здравствуй", "здравствуйте", "добрый день", "доброе утро", "добрый вечер",
         "barev", "barev dzez", "voghjuyn", "барев"
@@ -201,7 +237,7 @@ function isGreeting(message) {
 }
 
 function isThanks(message) {
-    return startsWithAnyPhrase(message, [
+    return isStandaloneFriendlyPhrase(message, [
         "thanks", "thank you", "thx", "спасибо", "благодарю", "shnorhakal", "merci", "апрес", "apres"
     ]);
 }
@@ -212,10 +248,9 @@ function isHowAreYou(message) {
         || normalized.includes("how r u")
         || normalized.includes("как дела")
         || normalized.includes("как ты")
-        || normalized.includes("vonc es")
-        || normalized.includes("vonces")
-        || normalized.includes("inch ka")
-        || normalized.includes("inchka");
+        || hasWholePhrase(message, "vonc es")
+        || hasWholePhrase(message, "vonces")
+        || equalsAnyPhrase(message, ["inch ka", "inchka", "inch ka?", "inchka?"]);
 }
 
 function friendlyAnswer(message) {
