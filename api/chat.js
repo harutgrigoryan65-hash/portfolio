@@ -37,7 +37,7 @@ const portfolioChunks = [
     {
         id: "contact",
         title: "Contact Details",
-        keywords: ["contact", "email", "phone", "linkedin", "hire", "reach", "связаться", "почта", "телефон", "контакт", "линкедин"],
+        keywords: ["contact", "email", "phone", "linkedin", "hire", "reach", "message", "direct", "telegram", "связаться", "почта", "телефон", "контакт", "линкедин", "телеграм", "директ", "kap", "kapvel", "grel", "heraxos"],
         content: `Contact details: email harut.grigoryan.65@gmail.com, phone +374 33 336 646, LinkedIn https://www.linkedin.com/in/harutyun-grigorian.`
     },
     {
@@ -85,6 +85,11 @@ const portfolioChunks = [
 ];
 
 const fallbackContextChunks = ["profile-summary", "contact"];
+const contactDetails = {
+    email: "harut.grigoryan.65@gmail.com",
+    phone: "+374 33 336 646",
+    linkedin: "https://www.linkedin.com/in/harutyun-grigorian"
+};
 const stopWords = new Set([
     "a", "an", "the", "and", "or", "for", "with", "what", "who", "how", "his", "her", "him", "about",
     "does", "can", "you", "is", "are", "was", "were", "to", "of", "in", "on", "at", "from", "this", "that",
@@ -289,23 +294,79 @@ function missingInfoAnswer(message) {
     return "The portfolio does not include information about that. You can use the Contact Harutyun button in this chat to message him directly.";
 }
 
+function contactAnswer(message) {
+    const language = detectLanguage(message);
+
+    if (language === "ru") {
+        return "Связаться с Harutyun можно здесь. Если хочешь написать прямо сейчас, нажми Contact Harutyun ниже.";
+    }
+
+    if (language === "hy-latn") {
+        return "Հարությունի հետ կարող ես կապվել այս տվյալներով։ Եթե ուզում ես գրել հենց հիմա, սեղմիր ներքևի Contact Harutyun կոճակը։";
+    }
+
+    return "You can contact Harutyun here. To message him directly from this chat, use the Contact Harutyun button below.";
+}
+
 function isContactRequest(message) {
     const normalized = normalizeText(message);
 
     return [
         "contact",
+        "contact him",
+        "contact harutyun",
         "email",
+        "mail",
         "phone",
+        "number",
         "linkedin",
+        "linked in",
         "reach",
+        "reach him",
+        "connect",
+        "connect with",
+        "get in touch",
         "hire",
+        "message",
+        "message him",
+        "talk to",
+        "talk with",
+        "speak to",
+        "speak with",
+        "direct",
+        "direct chat",
+        "telegram",
         "связаться",
+        "как связаться",
+        "связь",
         "почта",
+        "почту",
         "телефон",
+        "номер",
+        "позвонить",
         "контакт",
+        "контакты",
         "линкедин",
+        "телеграм",
+        "директ",
+        "написать",
+        "написать ему",
         "kap",
-        "կապ"
+        "kapvel",
+        "kapnvel",
+        "kap hastatel",
+        "grel",
+        "nran grel",
+        "xosel",
+        "xosel het",
+        "heraxos",
+        "linqdin",
+        "կապ",
+        "կապվել",
+        "գրել",
+        "հեռախոս",
+        "էլփոստ",
+        "լինքդին"
     ].some(function(keyword) {
         return normalized.includes(normalizeText(keyword));
     });
@@ -369,10 +430,6 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: "Method not allowed" });
     }
 
-    if (!process.env.GEMINI_API_KEY) {
-        return res.status(500).json({ error: "GEMINI_API_KEY is not configured" });
-    }
-
     const message = typeof req.body?.message === "string" ? req.body.message.trim() : "";
     const wantsContact = isContactRequest(message);
 
@@ -382,6 +439,15 @@ export default async function handler(req, res) {
 
     if (message.length > 500) {
         return res.status(400).json({ error: "Message is too long" });
+    }
+
+    if (wantsContact) {
+        return res.status(200).json({
+            answer: contactAnswer(message),
+            sources: [{ id: "contact", title: "Contact Details" }],
+            contactDetails,
+            suggestContact: true
+        });
     }
 
     const friendlyResponse = friendlyAnswer(message);
@@ -403,6 +469,10 @@ export default async function handler(req, res) {
             answer,
             suggestContact: true
         });
+    }
+
+    if (!process.env.GEMINI_API_KEY) {
+        return res.status(500).json({ error: "GEMINI_API_KEY is not configured" });
     }
 
     try {
