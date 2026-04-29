@@ -1483,24 +1483,6 @@
             position: relative;
             overflow: hidden;
             transform-style: preserve-3d;
-            will-change: transform;
-        }
-
-        .project-card:hover,
-        .mini-card:hover,
-        .video-card:hover,
-        .skill-group:hover,
-        .snapshot-card:hover,
-        .edu-card:hover {
-            transform:
-                perspective(900px)
-                rotateX(var(--tilt-y, 0deg))
-                rotateY(var(--tilt-x, 0deg))
-                translateY(-6px);
-            box-shadow:
-                inset 0 1px 0 rgba(255,255,255,0.12),
-                0 28px 76px rgba(0,0,0,0.28),
-                0 0 32px rgba(0,229,160,0.07);
         }
 
         .project-card::after,
@@ -1520,13 +1502,70 @@
             transition: opacity 0.25s ease;
         }
 
-        .project-card:hover::after,
-        .mini-card:hover::after,
-        .video-card:hover::after,
-        .skill-group:hover::after,
-        .snapshot-card:hover::after,
-        .edu-card:hover::after {
-            opacity: 1;
+        @media (hover: hover) and (pointer: fine) {
+            .project-card,
+            .mini-card,
+            .video-card,
+            .skill-group,
+            .snapshot-card,
+            .edu-card {
+                will-change: transform;
+            }
+
+            .project-card:hover,
+            .mini-card:hover,
+            .video-card:hover,
+            .skill-group:hover,
+            .snapshot-card:hover,
+            .edu-card:hover {
+                transform:
+                    perspective(1000px)
+                    translate3d(0, -6px, 0)
+                    rotateX(var(--tilt-y, 0deg))
+                    rotateY(var(--tilt-x, 0deg));
+                box-shadow:
+                    inset 0 1px 0 rgba(255,255,255,0.12),
+                    0 28px 76px rgba(0,0,0,0.28),
+                    0 0 32px rgba(0,229,160,0.07);
+            }
+
+            .project-card:hover::after,
+            .mini-card:hover::after,
+            .video-card:hover::after,
+            .skill-group:hover::after,
+            .snapshot-card:hover::after,
+            .edu-card:hover::after {
+                opacity: 1;
+            }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .project-card,
+            .mini-card,
+            .video-card,
+            .skill-group,
+            .snapshot-card,
+            .edu-card {
+                transform-style: flat;
+            }
+
+            .project-card::after,
+            .mini-card::after,
+            .video-card::after,
+            .skill-group::after,
+            .snapshot-card::after,
+            .edu-card::after {
+                display: none;
+            }
+
+            .project-card:hover,
+            .mini-card:hover,
+            .video-card:hover,
+            .skill-group:hover,
+            .snapshot-card:hover,
+            .edu-card:hover {
+                transform: none;
+            }
         }
 
         .portfolio-section {
@@ -3663,6 +3702,7 @@
 	        const progress = document.getElementById("scrollProgress");
 	        const cards = document.querySelectorAll(".project-card, .mini-card, .video-card, .skill-group, .snapshot-card, .edu-card");
 	        const sections = document.querySelectorAll(".portfolio-section");
+	        const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 
 	        function updateProgress() {
 	            if (!progress) return;
@@ -3671,42 +3711,43 @@
 	            progress.style.transform = `scaleX(${Math.max(0, Math.min(1, ratio))})`;
 	        }
 
-	        cards.forEach(function(card) {
-	            card.addEventListener("pointermove", function(event) {
-	                const rect = card.getBoundingClientRect();
-	                const x = ((event.clientX - rect.left) / rect.width) * 100;
-	                const y = ((event.clientY - rect.top) / rect.height) * 100;
-	                const tiltX = ((x - 50) / 50 * 5).toFixed(2);
-	                const tiltY = ((50 - y) / 50 * 5).toFixed(2);
+	        if (finePointer.matches) {
+	            cards.forEach(function(card) {
+	                card.addEventListener("pointermove", function(event) {
+	                    const rect = card.getBoundingClientRect();
+	                    const x = ((event.clientX - rect.left) / rect.width) * 100;
+	                    const y = ((event.clientY - rect.top) / rect.height) * 100;
+	                    const tiltX = ((x - 50) / 50 * 3.5).toFixed(2);
+	                    const tiltY = ((50 - y) / 50 * 3.5).toFixed(2);
 
-	                card.style.setProperty("--mx", `${x}%`);
-	                card.style.setProperty("--my", `${y}%`);
-	                card.style.setProperty("--tilt-x", `${tiltX}deg`);
-	                card.style.setProperty("--tilt-y", `${tiltY}deg`);
+	                    card.style.setProperty("--mx", `${x}%`);
+	                    card.style.setProperty("--my", `${y}%`);
+	                    card.style.setProperty("--tilt-x", `${tiltX}deg`);
+	                    card.style.setProperty("--tilt-y", `${tiltY}deg`);
+	                });
+
+	                card.addEventListener("pointerleave", function() {
+	                    card.style.removeProperty("--mx");
+	                    card.style.removeProperty("--my");
+	                    card.style.removeProperty("--tilt-x");
+	                    card.style.removeProperty("--tilt-y");
+	                });
 	            });
 
-	            card.addEventListener("pointerleave", function() {
-	                card.style.removeProperty("--mx");
-	                card.style.removeProperty("--my");
-	                card.style.removeProperty("--tilt-x");
-	                card.style.removeProperty("--tilt-y");
-	            });
-	        });
+	            document.querySelectorAll(".video-card video").forEach(function(video) {
+	                const card = video.closest(".video-card");
+	                if (!card) return;
 
-	        document.querySelectorAll(".video-card video").forEach(function(video) {
-	            const card = video.closest(".video-card");
-	            if (!card) return;
+	                card.addEventListener("mouseenter", function() {
+	                    video.muted = true;
+	                    video.play().catch(function() {});
+	                });
 
-	            card.addEventListener("mouseenter", function() {
-	                if (window.matchMedia("(pointer: coarse)").matches) return;
-	                video.muted = true;
-	                video.play().catch(function() {});
+	                card.addEventListener("mouseleave", function() {
+	                    video.pause();
+	                });
 	            });
-
-	            card.addEventListener("mouseleave", function() {
-	                video.pause();
-	            });
-	        });
+	        }
 
 	        if ("IntersectionObserver" in window) {
 	            const activeObserver = new IntersectionObserver(function(entries) {
