@@ -3,6 +3,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harutyun Grigoryan — R&amp;D Engineering Portfolio</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
@@ -1432,6 +1433,8 @@
         .console-row strong {
             color: var(--accent);
             font-weight: 700;
+            min-width: 48px;
+            text-align: right;
         }
 
         .console-dot {
@@ -2627,6 +2630,11 @@
         }
 
 	        @media (max-width: 520px) {
+                html.ai-chat-lock,
+                body.ai-chat-lock {
+                    overflow: hidden;
+                }
+
 	            .ai-chat {
 	                right: 12px;
 	                bottom: 12px;
@@ -2650,7 +2658,13 @@
 	            }
 
                 .ai-chat.open {
+                    position: fixed;
                     inset: 0;
+                    z-index: 1000;
+                    width: 100vw;
+                    height: 100vh;
+                    height: 100dvh;
+                    background: rgba(8,11,15,0.98);
                 }
 
                 .ai-chat-toggle {
@@ -2659,14 +2673,26 @@
 
 	            .ai-chat-panel {
 	                position: fixed;
-                    top: max(10px, env(safe-area-inset-top));
-                    right: max(10px, env(safe-area-inset-right));
-                    bottom: max(10px, env(safe-area-inset-bottom));
-                    left: max(10px, env(safe-area-inset-left));
+                    inset: 0;
 	                width: auto;
-	                height: auto;
+                    height: 100vh;
+	                height: 100dvh;
                     max-height: none;
+                    border: 0;
+                    border-radius: 0;
 	            }
+
+                .ai-chat.open .ai-chat-panel {
+                    grid-template-rows: auto minmax(0, 1fr) auto;
+                }
+
+                .ai-chat-head {
+                    padding-top: max(14px, env(safe-area-inset-top));
+                }
+
+                .ai-chat-form {
+                    padding-bottom: max(14px, env(safe-area-inset-bottom));
+                }
 
 	            .ai-chat-toggle {
 	                width: 56px;
@@ -2680,7 +2706,6 @@
                 }
 
 	            .ai-chat-head {
-	                padding: 14px 15px;
                     align-items: flex-start;
 	            }
 
@@ -2760,8 +2785,8 @@
                 <div class="live-console" aria-label="Live engineering status">
                     <div class="console-row">
                         <span class="console-dot"></span>
-                        <span>AI agents online</span>
-                        <strong>98ms</strong>
+                        <span>AI agent latency</span>
+                        <strong id="agentLatency">ready</strong>
                     </div>
                     <div class="console-row">
                         <span class="console-dot blue"></span>
@@ -3645,9 +3670,16 @@
 		    const chatNudge = document.getElementById("aiChatNudge");
 		    const chatNudgeClose = document.getElementById("aiChatNudgeClose");
 		    const chatHistory = [];
+		    const maxChatContextMessages = 3;
+		    const agentLatency = document.getElementById("agentLatency");
 		    let humanMode = sessionStorage.getItem("harut_human_chat_active") === "1";
 		    let humanSessionId = sessionStorage.getItem("harut_human_chat_session") || "";
 		    let humanPollTimer = null;
+		    const savedAgentLatency = sessionStorage.getItem("harut_agent_latency_ms");
+
+		    if (agentLatency && savedAgentLatency) {
+		        agentLatency.textContent = savedAgentLatency + "ms";
+		    }
 
 	    function preparePortfolioSections() {
 	        document.documentElement.classList.add("motion-ready");
@@ -3773,6 +3805,8 @@
 		    function toggleChat(forceOpen) {
 	        const shouldOpen = typeof forceOpen === "boolean" ? forceOpen : !chatRoot.classList.contains("open");
 	        chatRoot.classList.toggle("open", shouldOpen);
+	        document.documentElement.classList.toggle("ai-chat-lock", shouldOpen);
+	        document.body.classList.toggle("ai-chat-lock", shouldOpen);
 	        if (shouldOpen) hideChatNudge(true);
 	        if (shouldOpen) setTimeout(function() { chatInput.focus(); }, 80);
 	    }
@@ -3800,6 +3834,19 @@
         chatMessages.scrollTop = chatMessages.scrollHeight;
         return message;
     }
+
+	    function setAgentLatency(value) {
+	        if (!agentLatency) return;
+
+	        if (typeof value === "number" && Number.isFinite(value)) {
+	            const latency = Math.max(1, Math.round(value));
+	            agentLatency.textContent = latency + "ms";
+	            sessionStorage.setItem("harut_agent_latency_ms", String(latency));
+	            return;
+	        }
+
+	        agentLatency.textContent = value;
+	    }
 
 	    function addContactDetails(details) {
 	        if (!details || chatMessages.querySelector(".ai-contact-card")) return;
@@ -4077,12 +4124,17 @@
         if (chatSuggestions) chatSuggestions.remove();
 
         addChatMessage("user", question);
-        const requestHistory = chatHistory.slice(-8);
+        const requestHistory = chatHistory.slice(-maxChatContextMessages);
         chatHistory.push({ role: "user", content: question });
+        if (chatHistory.length > maxChatContextMessages) {
+            chatHistory.splice(0, chatHistory.length - maxChatContextMessages);
+        }
 
         chatInput.value = "";
         chatInput.disabled = true;
         chatSend.disabled = true;
+        const requestStartedAt = performance.now();
+        setAgentLatency("...");
 
         const typing = addChatMessage("bot", "Searching portfolio knowledge...");
 
@@ -4101,13 +4153,18 @@
             }
 
             const data = await response.json();
+	            setAgentLatency(performance.now() - requestStartedAt);
 	            const answer = data.answer || "I could not generate an answer right now.";
 	            typing.textContent = answer;
 	            addContactDetails(data.contactDetails);
 	            addChatSources(data.sources);
 	            if (data.suggestContact) addContactPrompt();
 	            chatHistory.push({ role: "assistant", content: answer });
+	            if (chatHistory.length > maxChatContextMessages) {
+	                chatHistory.splice(0, chatHistory.length - maxChatContextMessages);
+	            }
 	        } catch (error) {
+	            setAgentLatency("offline");
 	            typing.textContent = "The AI backend is not connected on this host yet. Deploy this repo on Vercel and set GEMINI_API_KEY to enable real chat responses.";
         } finally {
             chatInput.disabled = false;

@@ -85,6 +85,7 @@ const portfolioChunks = [
 ];
 
 const fallbackContextChunks = ["profile-summary", "contact"];
+const maxChatContextMessages = 3;
 const contactDetails = {
     email: "harut.grigoryan.65@gmail.com",
     phone: "+374 33 336 646",
@@ -166,6 +167,13 @@ function retrieveChunks(message, history) {
     return selected;
 }
 
+function getChunksByIds(ids) {
+    return ids
+        .map(function(id) { return portfolioChunks.find(function(chunk) { return chunk.id === id; }); })
+        .filter(Boolean)
+        .map(function(chunk) { return { ...chunk, score: 10 }; });
+}
+
 function formatRetrievedContext(chunks) {
     return chunks
         .map(function(chunk) {
@@ -183,7 +191,7 @@ function detectLanguage(text) {
 
     if (usesRussian(text)) return "ru";
 
-    if (/\b(barev|barev dzez|vonc|vonces|inch|inchka|inch ka|inchqan|lav|shnorhakal|merci|hajox|hajogh|apres|sirum|karox|karogh|unes|uni|pordz|ashxatanq|naxagic|kap)\b/i.test(normalized)) {
+    if (/\b(barev|barev dzez|vonc|vonces|inch|incha|inchka|inch ka|inchqan|lav|shnorhakal|merci|hajox|hajogh|apres|sirum|karum|anum|karox|karogh|unes|uni|pordz|ashxatanq|naxagic|kap)\b/i.test(normalized)) {
         return "hy-latn";
     }
 
@@ -308,6 +316,61 @@ function contactAnswer(message) {
     return "You can contact Harutyun here. To message him directly from this chat, use the Contact Harutyun button below.";
 }
 
+function isCapabilityRequest(message) {
+    const normalized = normalizeText(message);
+
+    return [
+        "what can he do",
+        "what can harutyun do",
+        "what does he do",
+        "what does harutyun do",
+        "what can he build",
+        "what can harutyun build",
+        "what is he building",
+        "what does he build",
+        "what are his skills",
+        "what is his stack",
+        "что он может делать",
+        "что может делать",
+        "что он делает",
+        "что делает",
+        "что он умеет",
+        "что умеет",
+        "что может",
+        "какие у него навыки",
+        "какой у него стек",
+        "чем он занимается",
+        "incha karum ani",
+        "inch karum ani",
+        "inch e karum ani",
+        "inch a karum ani",
+        "inch karogh e ani",
+        "inch karox e ani",
+        "inch kara ani",
+        "incha anum",
+        "inch a anum",
+        "inch e anum",
+        "inchov a zbaxvum",
+        "inchov e zbaxvum"
+    ].some(function(phrase) {
+        return normalized.includes(normalizeText(phrase));
+    });
+}
+
+function capabilityAnswer(message) {
+    const language = detectLanguage(message);
+
+    if (language === "ru") {
+        return "Harutyun может строить full-stack AI-продукты: frontend и backend, Python/Next.js/TypeScript сервисы, Telegram-боты, PostgreSQL-приложения, AI/RAG-системы, Computer Vision/OpenCV и OCR/Tesseract пайплайны. В портфолио также есть production automation, WebSocket-сервисы, Arduino/Raspberry Pi/relay-интеграции, PDF/презентации/сметы, CRM/work-management интеграции, diff/apply/rollback AI-флоу и mobile/PWA UX.";
+    }
+
+    if (language === "hy-latn") {
+        return "Հարությունը կարող է կառուցել full-stack AI պրոդուկտներ՝ frontend եւ backend, Python/Next.js/TypeScript սերվիսներ, Telegram bot-եր, PostgreSQL հավելվածներ, AI/RAG համակարգեր, Computer Vision/OpenCV եւ OCR/Tesseract pipeline-ներ։ Պորտֆոլիոյում կան նաեւ production automation, WebSocket սերվիսներ, Arduino/Raspberry Pi/relay ինտեգրացիաներ, PDF/պրեզենտացիա/սմետա ֆլոուներ, CRM/work-management ինտեգրացիաներ, AI diff/apply/rollback ֆլոուներ եւ mobile/PWA UX։";
+    }
+
+    return "Harutyun can build full-stack AI products: frontend and backend systems, Python/Next.js/TypeScript services, Telegram bots, PostgreSQL apps, AI/RAG workflows, Computer Vision/OpenCV and OCR/Tesseract pipelines. His portfolio also covers production automation, WebSocket services, Arduino/Raspberry Pi/relay integrations, PDF/presentation/estimate flows, CRM/work-management integrations, AI diff/apply/rollback flows, and mobile/PWA UX.";
+}
+
 function isContactRequest(message) {
     const normalized = normalizeText(message);
 
@@ -409,7 +472,7 @@ function normalizeHistory(history) {
     if (!Array.isArray(history)) return [];
 
     return history
-        .slice(-8)
+        .slice(-maxChatContextMessages)
         .map(function(item) {
             const role = item && item.role === "assistant" ? "model" : "user";
             const content = item && typeof item.content === "string" ? item.content.slice(0, 1000) : "";
@@ -432,6 +495,7 @@ export default async function handler(req, res) {
 
     const message = typeof req.body?.message === "string" ? req.body.message.trim() : "";
     const wantsContact = isContactRequest(message);
+    const wantsCapabilities = isCapabilityRequest(message);
 
     if (!message) {
         return res.status(400).json({ error: "Message is required" });
@@ -447,6 +511,21 @@ export default async function handler(req, res) {
             sources: [{ id: "contact", title: "Contact Details" }],
             contactDetails,
             suggestContact: true
+        });
+    }
+
+    if (wantsCapabilities) {
+        const sources = getChunksByIds(["profile-summary", "skills-stack", "projects", "business-platform"]);
+
+        return res.status(200).json({
+            answer: capabilityAnswer(message),
+            sources: sources.map(function(chunk) {
+                return {
+                    id: chunk.id,
+                    title: chunk.title
+                };
+            }),
+            suggestContact: false
         });
     }
 
