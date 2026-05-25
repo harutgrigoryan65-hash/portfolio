@@ -2947,7 +2947,7 @@
 
         <div class="label">Project Overview</div>
         <p class="desc">
-            A production-grade <strong>AI agent orchestration service</strong> — the central nervous system for live casino AI infrastructure.
+            A production-grade <strong>AI agent orchestration service</strong> — the central nervous system for live gaming studio AI infrastructure.
             Manages the full lifecycle of independent AI engines (Computer Vision agents, Hardware I/O agents, Lucky Color classifier)
             via an <strong>event-driven WebSocket API</strong>. Built with reliability-first principles:
             built-in retries, adaptive timeouts, process observability, and automated recovery.
@@ -2979,7 +2979,7 @@
         <div class="label">Production Status</div>
         <div class="result-box b">
             Live on <span class="hl2">4 active game tables</span> since October 2025.
-            <span class="hl2">99.9% uptime</span> with near-zero errors — achieved by distinguishing "network lag" from "process crash" at the observability layer.
+            Production-stable operation with near-zero observed errors — achieved by distinguishing "network lag" from "process crash" at the observability layer.
         </div>
     </div>
 
@@ -3000,7 +3000,7 @@
         </div>
 
         <div class="label">The Engineering Challenge</div>
-        <p class="desc">Physical sensors on a roulette wheel generated electrical noise ("bouncing"), producing false results during high-speed rotation. The system required <strong>0% error rate</strong> for casino payouts.</p>
+        <p class="desc">Physical sensors on a roulette wheel generated electrical noise ("bouncing"), producing false results during high-speed rotation. The system required <strong>production-safe result accuracy</strong> for real-money game outcomes.</p>
 
         <div class="label">Code Solution — Wheel_V2.2.py</div>
         <div class="code-window">
@@ -3037,7 +3037,7 @@
         </div>
 
         <div class="label">Business Outcome</div>
-        <div class="result-box">Eliminated hardware noise entirely. <span class="hl">Slashed game round duration by 37%</span> by removing the need for manual result verification.</div>
+        <div class="result-box">Eliminated observed hardware-noise errors in production testing. <span class="hl">Slashed game round duration by 37%</span> by removing the need for manual result verification.</div>
     </div>
 
     <!-- ═══════════════════════════════════ 03 COMPUTER VISION -->
@@ -3083,7 +3083,7 @@
         </div>
 
         <div class="label">Business Outcome</div>
-        <div class="result-box">Enabled <span class="hl">fully automated race payouts</span> with 100% fairness verification backed by geometric audit trail.</div>
+        <div class="result-box">Enabled <span class="hl">fully automated race payouts</span> with fairness verification backed by a geometric audit trail.</div>
     </div>
 
     <!-- ═══════════════════════════════════ 04 COMPLEX AUTOMATION -->
@@ -3104,7 +3104,7 @@
 
         <div class="label">The Engineering Challenge</div>
         <p class="desc">
-            A live casino dice game required tracking <strong>2 to 4 dice independently</strong> in a single round,
+            A live gaming dice product required tracking <strong>2 to 4 dice independently</strong> in a single round,
             depending on the game variant. The core problem: each die physically settles at a
             <strong>different moment in time</strong> after being shaken.
             A naive "snapshot when all dice are done" approach failed — the system couldn't know when
@@ -3275,8 +3275,71 @@
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════ 07 OTHER PROJECTS -->
-    <div class="section-title"><span class="section-num">07 /</span> Other Projects</div>
+    <!-- ═══════════════════════════════════ 07 KUPWORK AUTOMATION -->
+    <div class="section-title"><span class="section-num">07 /</span> AI Freelance Automation &amp; Browser Agent</div>
+
+    <div class="project-card orange">
+        <div class="card-header">
+            <h3>KUPWORK: Upwork Invite Watcher &amp; Auto-Reply System</h3>
+            <div class="project-id">KW-AUTO-01</div>
+        </div>
+        <div class="tags">
+            <span class="tag hi3">Python Backend</span>
+            <span class="tag hi3">Chrome Extension</span>
+            <span class="tag hi3">Telegram Bot</span>
+            <span class="tag">SQLite</span>
+            <span class="tag">IMAP / Upwork API</span>
+            <span class="tag">Claude / Gemini</span>
+            <span class="tag">Human-in-the-Loop</span>
+        </div>
+
+        <div class="label">Project Overview</div>
+        <p class="desc">
+            Built a private operations tool for processing inbound Upwork invitations: detect new invite events,
+            deduplicate them across email and API sources, route them to Telegram for review, and coordinate a
+            controlled browser workflow through a Chrome Extension. The system is designed around
+            <strong>human-approved automation</strong>: AI drafts the response, the operator approves the action,
+            and the browser agent executes the queued task with audit logs.
+        </p>
+
+        <div class="label">System Flow</div>
+        <div class="logic-flow">
+            <div class="flow-step">
+                <div class="step-n o">01</div>
+                <div class="step-body"><strong>Input Sources:</strong> Gmail/IMAP and Upwork API readers collect incoming invite and client-message events, normalize the payload, and extract clean project links.</div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n o">02</div>
+                <div class="step-body"><strong>State Store:</strong> SQLite tracks invites, processed email IDs, automation runs, browser tasks, Telegram state, AI generations, and step-by-step execution history.</div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n o">03</div>
+                <div class="step-body"><strong>Review Layer:</strong> Telegram cards and a lightweight web dashboard expose new events, assignment controls, online mode, logs, and manual status transitions.</div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n o">04</div>
+                <div class="step-body"><strong>Browser Task Queue:</strong> Approved actions create pending tasks. The Chrome Extension polls the backend, claims one task atomically, opens the target page, fills the proposal flow, and reports success or failure.</div>
+            </div>
+            <div class="divider-arrow">↓</div>
+            <div class="flow-step">
+                <div class="step-n o">05</div>
+                <div class="step-body"><strong>AI Drafting:</strong> Claude/Gemini provider settings, freelancer profile context, and agency style instructions are used to generate proposal text while preserving operator control over the final action.</div>
+            </div>
+        </div>
+
+        <div class="label">Engineering Outcome</div>
+        <div class="result-box o">
+            Turned a fragmented freelance operations workflow into a <span class="hl3">traceable event-driven pipeline</span>:
+            invite detection, deduplication, Telegram approval, dashboard visibility, AI-assisted drafting,
+            browser execution, and completion notifications.
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════ 08 SELECTED SMALLER SYSTEMS -->
+    <div class="section-title"><span class="section-num">08 /</span> Selected Smaller Systems</div>
 
     <div class="mini-grid">
 
@@ -3296,37 +3359,6 @@
                 <span class="mini-tag">Real-Time Pipeline</span>
             </div>
         </div>
-
-        <div class="mini-card mc1">
-            <h4>STUDIO MONITORING: Live Ops Dashboard</h4>
-            <p class="mini-desc">
-                Real-time monitoring system for live casino streaming studios. Tracks server health,
-                stream quality, and critical incidents. Built to handle simultaneous multi-table
-                monitoring with alerting and auto-escalation logic.
-            </p>
-            <div class="mini-tags">
-                <span class="mini-tag">WebSockets</span>
-                <span class="mini-tag">RTSP</span>
-                <span class="mini-tag">Auto-Alert</span>
-                <span class="mini-tag">Multi-Table</span>
-            </div>
-        </div>
-
-        <div class="mini-card mc3">
-            <h4>RELAY CONTROLLER: Arduino Hardware Bridge</h4>
-            <p class="mini-desc">
-                Python-to-Arduino serial bridge for industrial relay control in live game studios.
-                Handles physical game triggers (spin start, bet lock, result reveal) with
-                sub-millisecond timing precision and fail-safe fallback states.
-            </p>
-            <div class="mini-tags">
-                <span class="mini-tag">Arduino</span>
-                <span class="mini-tag">Serial/COM</span>
-                <span class="mini-tag">Relay Logic</span>
-                <span class="mini-tag">Fail-Safe</span>
-            </div>
-        </div>
-
 
         <div class="mini-card mc2">
             <h4>OCR SIGNAL BRIDGE: Video Text Trigger to grandMA3</h4>
@@ -3360,14 +3392,6 @@
             </div>
         </div>
 
-    </div>
-
-
-    <!-- ═══════════════════════════════════ 08 TELEGRAM / POSTGRES -->
-    <div class="section-title"><span class="section-num">08 /</span> Telegram Bots &amp; PostgreSQL Products</div>
-
-    <div class="mini-grid">
-
         <div class="mini-card mc1">
             <h4>@armdriveBOT — Driving Exam Preparation Bot</h4>
             <p class="mini-desc">
@@ -3382,22 +3406,6 @@
                 <span class="mini-tag">Python Backend</span>
                 <span class="mini-tag">User Progress</span>
                 <span class="mini-tag">Production Bot</span>
-            </div>
-        </div>
-
-        <div class="mini-card mc2">
-            <h4>Management Bot for Local Business</h4>
-            <p class="mini-desc">
-                Created a Telegram bot for the <strong>managerial staff of a local business</strong> to support internal workflows
-                and operational coordination. Implemented the backend logic, structured data handling,
-                and automated interactions to simplify routine manager tasks and improve responsiveness.
-            </p>
-            <div class="mini-tags">
-                <span class="mini-tag">Telegram Automation</span>
-                <span class="mini-tag">Business Workflow</span>
-                <span class="mini-tag">Python</span>
-                <span class="mini-tag">Internal Tool</span>
-                <span class="mini-tag">Operations</span>
             </div>
         </div>
 
@@ -3423,6 +3431,7 @@
             <div class="skill-group-title">AI &amp; LLM Integration</div>
             <div class="skill-pills">
                 <span class="sp sp-green">Gemini API</span>
+                <span class="sp sp-green">Claude API</span>
                 <span class="sp sp-green">LLM Tool-Calling</span>
                 <span class="sp sp-green">RAG Architecture</span>
                 <span class="sp sp-green">Data Chunking</span>
@@ -3442,6 +3451,7 @@
                 <span class="sp sp-blue">REST / TCP APIs</span>
                 <span class="sp sp-blue">Telegram Bot API</span>
                 <span class="sp sp-blue">CRM Integrations</span>
+                <span class="sp">IMAP Automation</span>
                 <span class="sp">Event-Driven Services</span>
                 <span class="sp">Microservices</span>
             </div>
@@ -3452,6 +3462,7 @@
             <div class="skill-pills">
                 <span class="sp sp-blue">Next.js</span>
                 <span class="sp sp-blue">TypeScript</span>
+                <span class="sp sp-blue">Chrome Extensions</span>
                 <span class="sp">PDF Generation</span>
                 <span class="sp">PWA / Mobile UX</span>
                 <span class="sp">Diff &amp; Rollback Flows</span>
@@ -3496,6 +3507,7 @@
             <div class="skill-group-title">Databases</div>
             <div class="skill-pills">
                 <span class="sp sp-green">PostgreSQL</span>
+                <span class="sp sp-green">SQLite</span>
                 <span class="sp sp-green">pgAdmin</span>
                 <span class="sp">Query Design</span>
                 <span class="sp">Data Modeling</span>
