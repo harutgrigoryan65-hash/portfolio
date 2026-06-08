@@ -3681,6 +3681,28 @@
 	<script>
 	    const portfolioChatApiUrl = window.HARUT_CHAT_API_URL || "/api/chat";
 	    const humanChatApiUrl = window.HARUT_HUMAN_CHAT_API_URL || "/api/human-chat";
+
+	    function buildChatErrorMessage(error) {
+	        const details = String(error && error.message ? error.message : "");
+
+	        if (details.includes("GEMINI_API_KEY is not configured")) {
+	            return "Vercel backend answered, but GEMINI_API_KEY is not configured in the deployed environment. Add it in Vercel Project Settings -> Environment Variables and redeploy.";
+	        }
+
+	        if (details.includes("404")) {
+	            return "This host does not have the /api/chat backend. Open the Vercel deployment URL for this project instead of the static GitHub Pages host.";
+	        }
+
+	        if (details.includes("403")) {
+	            return "The backend rejected this request with 403. Check SITE_ORIGIN in Vercel and make sure it matches the exact public site URL.";
+	        }
+
+	        if (details.includes("500")) {
+	            return "The backend is reachable, but it failed with a server error. Check the Vercel Function logs for /api/chat to see the exact reason.";
+	        }
+
+	        return "The AI backend is not connected on this host yet. Open the Vercel deployment URL for this repo and make sure GEMINI_API_KEY is configured there.";
+	    }
 	    const chatRoot = document.getElementById("aiChat");
 	    const chatToggle = document.getElementById("aiChatToggle");
 	    const chatClose = document.getElementById("aiChatClose");
@@ -4175,7 +4197,18 @@
             });
 
             if (!response.ok) {
-                throw new Error("Chat endpoint is not available yet.");
+                let errorMessage = `Chat endpoint returned ${response.status}`;
+
+                try {
+                    const errorData = await response.json();
+                    if (errorData && errorData.error) {
+                        errorMessage = `${errorMessage}: ${errorData.error}`;
+                    }
+                } catch (parseError) {
+                    // Ignore parse failures and keep the HTTP status message.
+                }
+
+                throw new Error(errorMessage);
             }
 
             const data = await response.json();
@@ -4191,7 +4224,7 @@
 	            }
 	        } catch (error) {
 	            setAgentLatency("offline");
-	            typing.textContent = "The AI backend is not connected on this host yet. Deploy this repo on Vercel and set GEMINI_API_KEY to enable real chat responses.";
+	            typing.textContent = buildChatErrorMessage(error);
         } finally {
             chatInput.disabled = false;
             chatSend.disabled = false;
